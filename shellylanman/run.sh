@@ -13,4 +13,12 @@ chown -R shellylanman:shellylanman /data
 export SHELLYLANMAN_DATA=/data
 export SHELLYLANMAN_INGRESS="${SHELLYLANMAN_INGRESS:-172.30.32.1:8099}"
 
+# Option mcp_local (default on): ShellyLanMan's MCP server also on 127.0.0.1
+# without token, for Home Assistant on this host (its MCP client cannot send a
+# token). Only processes on this machine reach it; MCP must be enabled in
+# ShellyLanMan and its access level applies.
+if ! grep -Eq '"mcp_local" *: *false' /data/options.json 2>/dev/null; then
+  export SHELLYLANMAN_MCP_LOCAL="${SHELLYLANMAN_MCP_LOCAL:-127.0.0.1:8097}"
+fi
+
 exec su-exec shellylanman /usr/local/bin/shellylanman

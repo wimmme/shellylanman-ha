@@ -27,10 +27,30 @@ Two repositories, one product:
   same version. The workflow builds and pushes the app image; Home Assistant offers the
   update once `config.yaml` on `main` has the new version.
 
-## The integration (planned, Phase 11c)
+## The integration
 
-It will talk to ShellyLanMan's REST API (`/api/v1`), WebSocket (`/ws`) and MCP server
-(`/mcp`). Supported ShellyLanMan versions will be listed here, with the API it needs.
+**Needs ShellyLanMan 0.5.0 or newer** (`instanceId` in `/api/v1/about`). Home Assistant
+2026.9 or newer (`hacs.json`); tested against 2026.9.4 and the newest release.
+
+What it uses of ShellyLanMan (a change there is a breaking change for the integration):
+
+| Call | For |
+|---|---|
+| `GET /api/v1/about` → `instanceId`, `version` | unique id of the entry, version sensor |
+| `GET /api/v1/devices` (every 30 s) → `id` (MAC), `name`, `hostname`, `typeName`, `status`, `ip`, `gen`, `error`, `rebootRequired` | status sensors, counters, device matching |
+| `GET /api/v1/backups` → `deviceId`, `time` | last backup sensor |
+| `POST /api/v1/backup` `{"ids": [...]}` → `{"results": [{"result": "ok" / "queued" / "stored" / "fail", "message"}]}` | backup button |
+| `GET /api/v1/checklist` (every 30 min) → the ChecklistRow cells | checklist binary sensors |
+| `POST /api/v1/scan` | rescan button |
+| `POST /mcp` with the bearer token: `tools/list`, `tools/call` | the LLM API for Assist |
+
+It polls on purpose and does not keep ShellyLanMan's WebSocket open: an open
+WebSocket counts as a viewer, and with viewers ShellyLanMan polls every device every
+two seconds.
+
+**App discovery** (ShellyLanMan 0.5.0+, app `discovery:`): `shellylanman`
+`{"url": "http://127.0.0.1:<port>"}` and `mcp` `{"url": "http://127.0.0.1:8097/mcp"}`,
+sent again after a port change (the integration then updates its URL).
 
 ## Where decisions are recorded
 

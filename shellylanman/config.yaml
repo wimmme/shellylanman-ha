@@ -3,7 +3,7 @@
 # ghcr.io/wimmme/shellylanman-ha:<version> is built from
 # ghcr.io/wimmme/shellylanman:<version> (see COMPATIBILITY.md).
 name: ShellyLanMan
-version: "0.4.0"
+version: "0.5.0"
 slug: shellylanman
 description: Discover, monitor and manage the Shelly devices on your LAN — locally, without the Shelly cloud.
 url: https://github.com/wimmme/shellylanman
@@ -21,5 +21,12 @@ panel_title: ShellyLanMan
 # /data (settings, archive, scenes, configuration backups) goes into HA backups.
 backup: hot
 init: false
-options: {}
-schema: {}
+# Announced to Home Assistant: the ShellyLanMan integration (custom_components/
+# shellylanman) and Home Assistant's own MCP client (Assist).
+discovery:
+  - shellylanman
+  - mcp
+options:
+  mcp_local: true
+schema:
+  mcp_local: bool

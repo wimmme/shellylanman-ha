@@ -1,0 +1,105 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ShellyLanMan",
+        "description": "Het adres van ShellyLanMan, bv. http://192.168.1.10:3082. Het MCP-token (ShellyLanMan → Instellingen → MCP) is alleen nodig om Assist de tools van ShellyLanMan te geven.",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP-token"
+        }
+      },
+      "hassio_confirm": {
+        "title": "ShellyLanMan",
+        "description": "ShellyLanMan toevoegen, dat als Home Assistant-app draait ({url})?"
+      },
+      "reconfigure": {
+        "title": "ShellyLanMan",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP-token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "ShellyLanMan is niet bereikbaar op dit adres.",
+      "invalid_token": "Het MCP-token werd geweigerd.",
+      "too_old": "Deze ShellyLanMan is te oud: versie 0.5.0 of nieuwer is nodig.",
+      "unknown": "Onverwachte fout."
+    },
+    "abort": {
+      "already_configured": "Deze ShellyLanMan is al ingesteld.",
+      "cannot_connect": "ShellyLanMan is niet bereikbaar.",
+      "too_old": "Deze ShellyLanMan is te oud: versie 0.5.0 of nieuwer is nodig.",
+      "reconfigure_successful": "Opgeslagen.",
+      "wrong_instance": "Dat adres is een andere ShellyLanMan."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "ShellyLanMan status",
+        "state": {
+          "online": "Online",
+          "offline": "Offline",
+          "login": "Wachtwoord nodig",
+          "reading": "Bezig met lezen",
+          "error": "Fout",
+          "ghost": "Niet gevonden (archief)"
+        }
+      },
+      "last_backup": {
+        "name": "Laatste configuratiebackup"
+      },
+      "devices_online": {
+        "name": "Apparaten online"
+      },
+      "devices_offline": {
+        "name": "Apparaten offline"
+      },
+      "devices_attention": {
+        "name": "Apparaten die aandacht vragen"
+      },
+      "version": {
+        "name": "Versie"
+      }
+    },
+    "binary_sensor": {
+      "eco_mode": {
+        "name": "Eco-modus"
+      },
+      "led_off": {
+        "name": "LED uit"
+      },
+      "debug_log": {
+        "name": "Debuglog"
+      },
+      "bluetooth": {
+        "name": "Bluetooth"
+      },
+      "access_point": {
+        "name": "Access point"
+      },
+      "roaming": {
+        "name": "Wifi-roaming"
+      },
+      "static_ip": {
+        "name": "Vast IP-adres"
+      },
+      "range_extender": {
+        "name": "Range extender"
+      },
+      "auto_firmware_update": {
+        "name": "Automatische firmware-update"
+      }
+    },
+    "button": {
+      "backup": {
+        "name": "Configuratie back-uppen"
+      },
+      "rescan": {
+        "name": "Netwerk opnieuw scannen"
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+# Home Assistant 2026.9.4 (the oldest supported, voluptuous); CI also runs 0.13.368 (2026.10, probatio).
+pytest-homeassistant-custom-component==0.13.367

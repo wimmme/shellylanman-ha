@@ -1,0 +1,8 @@
+configuration:
+  mcp_local:
+    name: MCP voor Home Assistant zonder token
+    description: >-
+      De MCP-server van ShellyLanMan ook aanbieden op 127.0.0.1:8097, zonder token, zodat
+      Home Assistants eigen MCP-integratie (Assist) hem kan gebruiken. Alleen programma's
+      op deze machine bereiken hem; de MCP-server moet aanstaan in ShellyLanMan
+      (Instellingen → MCP), en het toegangsniveau blijft gelden.

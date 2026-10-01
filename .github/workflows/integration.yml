@@ -1,0 +1,43 @@
+name: Integration
+
+# Tests of custom_components/shellylanman against the oldest supported Home
+# Assistant (2026.9, voluptuous) and the newest (probatio), plus Home
+# Assistant's and HACS's own validation.
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        phcc: ['0.13.367', 'latest']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Install
+        run: |
+          if [ "${{ matrix.phcc }}" = latest ]; then pip install pytest-homeassistant-custom-component
+          else pip install "pytest-homeassistant-custom-component==${{ matrix.phcc }}"; fi
+      - name: Tests
+        run: python -m pytest -q -p no:cacheprovider
+
+  hassfest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: home-assistant/actions/hassfest@master
+
+  hacs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hacs/action@main
+        with:
+          category: integration
