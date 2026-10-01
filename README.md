@@ -15,7 +15,13 @@ Container and Core have no apps. There, run ShellyLanMan with Docker as describe
 
 ## Install the app
 
-[![Add repository](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fwimmme%2Fshellylanman-ha)
+1. Add this repository to Home Assistant's app store:
+
+   [![Add the repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fwimmme%2Fshellylanman-ha)
+
+2. Open the app and install it, then start it:
+
+   [![Open the ShellyLanMan app in your Home Assistant](https://my.home-assistant.io/badges/supervisor_addon.svg)](https://my.home-assistant.io/redirect/supervisor_addon/?addon=505f279b_shellylanman&repository_url=https%3A%2F%2Fgithub.com%2Fwimmme%2Fshellylanman-ha)
 
 Or by hand: **Settings → Apps → App Store → ⋮ → Repositories**, add
 `https://github.com/wimmme/shellylanman-ha`, then install **ShellyLanMan**.
@@ -28,11 +34,18 @@ ShellyLanMan work together.
 
 Needs ShellyLanMan **0.5.0** or newer (the app, or the Docker version) and HACS.
 
-1. HACS → ⋮ → **Custom repositories** → `https://github.com/wimmme/shellylanman-ha`,
-   type **Integration** → install **ShellyLanMan**, restart Home Assistant.
+1. Open the repository in HACS and download **ShellyLanMan**, then restart Home
+   Assistant:
+
+   [![Open the repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
+
+   (By hand: HACS → ⋮ → **Custom repositories** → `https://github.com/wimmme/shellylanman-ha`,
+   type **Integration**.)
 2. With the app, Home Assistant offers **ShellyLanMan** under *Settings → Devices &
-   services → Discovered*: one click. Otherwise *Add integration → ShellyLanMan* and
-   ShellyLanMan's address (`http://<host>:3082`).
+   services → Discovered*: one click. Otherwise add it with ShellyLanMan's address
+   (`http://<host>:3082`):
+
+   [![Add the ShellyLanMan integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=shellylanman)
 
 What you get, on the devices Home Assistant already has (matched by MAC address; a
 device of its own when the Shelly integration does not have it):
