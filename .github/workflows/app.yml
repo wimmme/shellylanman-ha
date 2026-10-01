@@ -1,0 +1,52 @@
+name: App
+
+# Every push: check the versions and build the app image (not pushed).
+# A vX.Y.Z tag: the same, then push ghcr.io/wimmme/shellylanman-ha:X.Y.Z.
+on:
+  push:
+    branches: [main]
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+  pull_request:
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/wimmme/shellylanman-ha
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Versions agree
+        id: v
+        run: |
+          app=$(sed -n 's/^version: *"\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' shellylanman/config.yaml)
+          base=$(sed -n 's/^ARG SHELLYLANMAN_VERSION=\(.*\)$/\1/p' shellylanman/Dockerfile)
+          echo "app $app, ShellyLanMan $base"
+          # App-only fixes add "-N" to the ShellyLanMan version (COMPATIBILITY.md).
+          case "$app" in "$base"|"$base"-*) ;; *) echo "config.yaml version $app does not match ShellyLanMan $base"; exit 1 ;; esac
+          if [ "${GITHUB_REF_TYPE}" = tag ] && [ "${GITHUB_REF_NAME}" != "v$app" ]; then
+            echo "tag ${GITHUB_REF_NAME} does not match config.yaml version $app"; exit 1
+          fi
+          echo "app=$app" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-qemu-action@v4
+        with:
+          platforms: linux/amd64,linux/arm64
+      - uses: docker/setup-buildx-action@v4
+      - if: github.ref_type == 'tag'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v7
+        with:
+          context: shellylanman
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.ref_type == 'tag' }}
+          tags: ${{ env.IMAGE }}:${{ steps.v.outputs.app }}
+          labels: |
+            io.hass.arch=amd64,aarch64
