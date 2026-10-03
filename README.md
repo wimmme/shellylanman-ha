@@ -2,7 +2,8 @@
 
 Home Assistant packaging of [ShellyLanMan](https://github.com/wimmme/shellylanman) — the
 web application that discovers, monitors and manages the Shelly devices on your LAN,
-based on [ShellyScanner](https://github.com/usnasoft/shellyscanner).
+started from [ShellyScanner](https://github.com/usnasoft/shellyscanner), built on its basis
+and developed further.
 
 Two ways to run ShellyLanMan:
 
