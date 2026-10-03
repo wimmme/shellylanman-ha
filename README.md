@@ -4,6 +4,13 @@ Home Assistant packaging of [ShellyLanMan](https://github.com/wimmme/shellylanma
 web application that discovers, monitors and manages the Shelly devices on your LAN,
 based on [ShellyScanner](https://github.com/usnasoft/shellyscanner).
 
+Two ways to run ShellyLanMan:
+
+- **As a Home Assistant app** (Home Assistant OS or Supervised): below, *Install the app*.
+- **As a standalone Docker container**, on any machine in your LAN: see ShellyLanMan's
+  [README](https://github.com/wimmme/shellylanman#readme). The integration works with
+  either.
+
 | Part | Status |
 |---|---|
 | **App** (`shellylanman/`): ShellyLanMan inside Home Assistant OS, in the sidebar | available |
@@ -47,15 +54,21 @@ Needs ShellyLanMan **0.5.0** or newer (the app, or the Docker version) and HACS.
 
    [![Add the ShellyLanMan integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=shellylanman)
 
-What you get, on the devices Home Assistant already has (matched by MAC address; a
-device of its own when the Shelly integration does not have it):
+**The Shellys themselves come from Home Assistant's own Shelly integration** — add them
+there first (Home Assistant usually discovers them). This integration does not add your
+Shellys to Home Assistant; it adds what ShellyLanMan knows about them. Per Shelly it
+makes a device of its own, which Home Assistant shows as *linked* to the Shelly
+integration's device through their MAC address (since Home Assistant 2026.8 a device
+belongs to one integration; they are no longer merged into one).
+
+What you get:
 
 | Entity | |
 |---|---|
-| ShellyLanMan status (online / offline / password needed / error / not found) | enabled |
+| ShellyLanMan status (online / offline / password needed / error / not found / searching) | enabled |
 | Last configuration backup, and a button *Back up configuration* | enabled |
 | Checklist items: eco mode, LED off, debug log, Bluetooth, access point, Wi-Fi roaming, static IP, range extender, automatic firmware update | disabled — switch on what you want to watch |
-| A device *ShellyLanMan*: devices on line / off line / needing attention, version, *Scan the network again* | enabled |
+| A device *ShellyLanMan*: devices online / offline / needing attention, version, *Scan the network again* | enabled |
 
 Relays, lights, meters and firmware updates stay with Home Assistant's own Shelly
 integration; ShellyLanMan is not in the path of your automations.

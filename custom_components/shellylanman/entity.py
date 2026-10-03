@@ -12,21 +12,20 @@ from .const import DOMAIN
 
 
 def device_info(dev: dict[str, Any]) -> DeviceInfo:
-    """Device info that lands on the Shelly integration's device with the same MAC.
+    """ShellyLanMan's device for one Shelly, linked to the Shelly integration's by MAC.
 
-    The official Shelly integration registers its devices by MAC connection; a
-    device with the same connection is the same device in Home Assistant. When
-    that integration does not have the device, this creates one of our own.
-    Only default_* values: they never overwrite the name, maker and model the
-    Shelly integration (or the user) gave the device.
+    Since Home Assistant 2026.8 a device belongs to one integration only: the
+    Shelly integration's device and this one stay two devices, which Home
+    Assistant shows as linked through their shared MAC connection. Being our
+    own, it gets the name, maker and model directly (the default_* fields are
+    deprecated, removed in 2027.9).
     """
-    mac = format_mac(dev.get("id", ""))
     return DeviceInfo(
-        connections={(CONNECTION_NETWORK_MAC, mac)},
+        connections={(CONNECTION_NETWORK_MAC, format_mac(dev["id"]))},
         identifiers={(DOMAIN, dev["id"])},
-        default_name=dev.get("name") or dev.get("hostname") or dev["id"],
-        default_manufacturer="Shelly",
-        default_model=dev.get("typeName") or None,
+        name=dev.get("name") or dev.get("hostname") or dev["id"],
+        manufacturer="Shelly",
+        model=dev.get("typeName") or None,
     )
 
 

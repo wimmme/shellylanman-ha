@@ -1,8 +1,8 @@
 """ShellyLanMan for Home Assistant.
 
-Adds what ShellyLanMan knows about your Shelly devices to the devices Home
-Assistant already has (matched by MAC address): ShellyLanMan's status, the
-configuration backup and the settings checklist — and, with the MCP token,
+Adds what ShellyLanMan knows about your Shelly devices — ShellyLanMan's status,
+the configuration backup and the settings checklist — on a device per Shelly that
+Home Assistant links to the Shelly integration's device by MAC address — and, with the MCP token,
 ShellyLanMan's tools for Assist. It does not duplicate what the official
 Shelly integration does (relays, lights, meters, firmware updates).
 """
@@ -19,7 +19,7 @@ from homeassistant.helpers import device_registry as dr, llm
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import ShellyLanManClient, ShellyLanManError
-from .const import CONF_MCP_TOKEN, DOMAIN
+from .const import CONF_MCP_TOKEN, DOMAIN, is_mac
 from .coordinator import ChecklistCoordinator, StateCoordinator
 from .llm_api import ShellyLanManAPI
 
@@ -64,6 +64,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry)
         entry_type=dr.DeviceEntryType.SERVICE,
     )
 
+    # 0.5.0 also made devices for Shellys ShellyLanMan had not identified yet
+    # ("addr:<ip:port>"); they are no devices.
+    reg = dr.async_get(hass)
+    for device in dr.async_entries_for_config_entry(reg, entry.entry_id):
+        ids = [i for d, i in device.identifiers if d == DOMAIN]
+        if ids and not any(is_mac(i) or i == entry.runtime_data.instance_id for i in ids):
+            reg.async_remove_device(device.id)
+
     if client.mcp_token:  # Assist: ShellyLanMan's MCP tools as an LLM API
         entry.async_on_unload(llm.async_register_api(hass, ShellyLanManAPI(hass=hass, id=f"{DOMAIN}-{entry.entry_id}", name="ShellyLanMan", client=client)))
 
@@ -74,6 +82,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry)
 
 async def _reload(hass: HomeAssistant, entry: ShellyLanManConfigEntry) -> None:
     await hass.config_entries.async_reload(entry.entry_id)
+
+
+async def async_remove_config_entry_device(hass: HomeAssistant, entry: ShellyLanManConfigEntry, device: dr.DeviceEntry) -> bool:
+    """Let the user delete a device ShellyLanMan no longer lists (not ShellyLanMan itself)."""
+    ids = {i for d, i in device.identifiers if d == DOMAIN}
+    return not ids & (set(entry.runtime_data.state.data.devices) | {entry.runtime_data.instance_id})
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry) -> bool:

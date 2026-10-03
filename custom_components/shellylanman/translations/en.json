@@ -45,17 +45,18 @@
           "login": "Password needed",
           "reading": "Reading",
           "error": "Error",
-          "ghost": "Not found (archive)"
+          "ghost": "Not found (archive)",
+          "searching": "Searching"
         }
       },
       "last_backup": {
         "name": "Last configuration backup"
       },
       "devices_online": {
-        "name": "Devices on line"
+        "name": "Devices online"
       },
       "devices_offline": {
-        "name": "Devices off line"
+        "name": "Devices offline"
       },
       "devices_attention": {
         "name": "Devices needing attention"

@@ -45,7 +45,8 @@
           "login": "Wachtwoord nodig",
           "reading": "Bezig met lezen",
           "error": "Fout",
-          "ghost": "Niet gevonden (archief)"
+          "ghost": "Niet gevonden (archief)",
+          "searching": "Zoeken"
         }
       },
       "last_backup": {

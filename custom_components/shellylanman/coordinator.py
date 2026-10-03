@@ -16,7 +16,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import ShellyLanManClient, ShellyLanManError
-from .const import CHECKLIST_INTERVAL, DOMAIN, SCAN_INTERVAL
+from .const import CHECKLIST_INTERVAL, DOMAIN, SCAN_INTERVAL, is_mac
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -51,7 +51,9 @@ class StateCoordinator(DataUpdateCoordinator[State]):
             last.setdefault(b.get("deviceId", ""), int(b.get("time", 0)))
         return State(
             version=str(about.get("version", "")),
-            devices={d["id"]: d for d in devices if d.get("id")},
+            # Only identified devices (the id is the MAC): a Shelly that could not be read
+            # yet is listed by ShellyLanMan as "addr:<ip:port>" and gets no device here.
+            devices={d["id"]: d for d in devices if is_mac(d.get("id"))},
             last_backup=last,
         )
 

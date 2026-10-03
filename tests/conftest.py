@@ -20,6 +20,9 @@ DEVICES: list[dict[str, Any]] = [
      "gen": "2", "ip": "192.0.2.20", "status": "online"},
     {"id": "80646F838136", "name": "Grondwaterpomp", "hostname": "shellyplug-s-80646F838136", "typeName": "PlugS",
      "gen": "1", "ip": "192.0.2.86", "status": "error", "error": "timeout"},
+    # Not identified yet (ShellyLanMan lists it by address): no device in Home Assistant.
+    {"id": "addr:192.0.2.150:80", "name": "", "hostname": "shellytestplug", "typeName": "Generic",
+     "gen": "-", "ip": "192.0.2.150", "status": "error", "error": "timeout"},
 ]
 
 CHECKLIST: list[dict[str, Any]] = [

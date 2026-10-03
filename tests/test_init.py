@@ -121,3 +121,19 @@ async def test_backup_failure_reported(hass: HomeAssistant, aioclient_mock: Aioh
     mock_shellylanman(aioclient_mock)  # registered after: the failure answer wins
     with pytest.raises(HomeAssistantError, match="Status-OFFLINE"):
         await hass.services.async_call("button", "press", {"entity_id": _entity(hass, "80646F838136-backup", "button").entity_id}, blocking=True)
+
+
+async def test_device_per_shelly_and_no_unidentified(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, entry: MockConfigEntry) -> None:
+    mock_shellylanman(aioclient_mock)
+    entry.add_to_hass(hass)
+    reg = dr.async_get(hass)
+    # Left over from 0.5.0: a device for a Shelly that was not identified yet.
+    stale = reg.async_get_or_create(config_entry_id=entry.entry_id, identifiers={(DOMAIN, "addr:192.0.2.150:80")}, name="shellytestplug")
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    assert reg.async_get(stale.id) is None
+    assert er.async_get(hass).async_get_entity_id("sensor", DOMAIN, "addr:192.0.2.150:80-status") is None
+    dev = next((d for d in dr.async_entries_for_config_entry(reg, entry.entry_id) if (DOMAIN, "ECE334F95020") in d.identifiers), None)
+    assert dev and dev.name == "LedBerging" and dev.manufacturer == "Shelly" and dev.model == "Shelly Pro RGBWW PM"
+    assert (dr.CONNECTION_NETWORK_MAC, "ec:e3:34:f9:50:20") in dev.connections

@@ -2,6 +2,19 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## Unreleased
+
+- Devices: name, maker and model are set directly instead of the `default_*` fields,
+  which Home Assistant deprecated (warning in the log; removed in 2027.9). Since Home
+  Assistant 2026.8 a device belongs to one integration, so ShellyLanMan's device for a
+  Shelly is its own device, linked to the Shelly integration's one by MAC address.
+- Shellys that ShellyLanMan has not identified yet (listed by address) get no device;
+  such devices made by 0.5.0 are removed. A device ShellyLanMan no longer lists can be
+  deleted in Home Assistant.
+- Status `searching` (ShellyLanMan 0.6.0: a device listed before a rescan and not found
+  again yet). Counters are called *Devices online* / *Devices offline*.
+- Manifest key order (hassfest).
+
 ## 0.5.0
 
 First version of the ShellyLanMan integration (`custom_components/shellylanman`):
