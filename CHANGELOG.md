@@ -2,7 +2,7 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
-## Unreleased
+## 0.6.0
 
 - Devices: name, maker and model are set directly instead of the `default_*` fields,
   which Home Assistant deprecated (warning in the log; removed in 2027.9). Since Home

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0
+
+ShellyLanMan 0.6.0: one selection across Devices, Checklist and Firmware, buttons that
+say why they are grey, a calmer rescan (devices show *searching*), the Home Assistant
+look everywhere, a menu for phones. The log now also says when the app announced
+itself to Home Assistant. See the [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.5.0
 
 - Announces itself to Home Assistant: the ShellyLanMan integration and Home
