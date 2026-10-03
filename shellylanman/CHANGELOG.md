@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.1
+
+Runs ShellyLanMan 0.6.1.
+
+- Charts follow the selection too: devices ticked on Devices, Checklist or Firmware are
+  charted when you open Charts from the menu.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.6.0
 
 Runs ShellyLanMan 0.6.0.
