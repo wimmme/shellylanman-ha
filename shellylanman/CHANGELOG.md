@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.2
+
+Runs ShellyLanMan 0.6.2.
+
+- The script editor shows the code again (it showed only line numbers).
+- A "Reading the script from the device…" dialog while a slow device sends its code.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.6.1
 
 Runs ShellyLanMan 0.6.1.

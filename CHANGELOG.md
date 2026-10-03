@@ -2,6 +2,12 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## 0.6.2
+
+Works with ShellyLanMan 0.5.0 or newer; Home Assistant 2026.9 or newer.
+
+- No changes; same version as the app.
+
 ## 0.6.1
 
 Works with ShellyLanMan 0.5.0 or newer; Home Assistant 2026.9 or newer.
