@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.6.4
+
+Runs ShellyLanMan 0.6.4.
+
+- The script editor opens at once and says it is reading the script, also on a device
+  with weak Wi-Fi; a second double-click does not open it twice.
+- When the device cannot send the code, the editor shows the error with *Retry*
+  instead of an empty editor, and *Upload* stays off, so a failed read can never wipe
+  the script on the device.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.6.3
 
 Runs ShellyLanMan 0.6.3.
