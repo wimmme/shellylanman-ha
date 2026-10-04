@@ -5,4 +5,4 @@ set -eu
 cd "$(dirname "$0")/.."
 PHCC="${1:-$(sed -n 's/^pytest-homeassistant-custom-component==//p' requirements_test.txt)}"
 docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD":/src -w /src -v slm-ha-pip:/root/.cache/pip python:3.14-slim \
-  sh -c "pip install -q pytest-homeassistant-custom-component==$PHCC && python -m pytest -q -p no:cacheprovider"
+  sh -c "pip install -q pytest-homeassistant-custom-component==$PHCC && pip install -q \$(python tools/ha_reqs.py shelly) && python -m pytest -q -p no:cacheprovider"

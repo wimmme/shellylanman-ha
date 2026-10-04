@@ -38,6 +38,9 @@ What it uses of ShellyLanMan (a change there is a breaking change for the integr
 |---|---|
 | `GET /api/v1/about` → `instanceId`, `version` | unique id of the entry, version sensor |
 | `GET /api/v1/devices` (every 30 s) → `id` (MAC), `name`, `hostname`, `typeName`, `status`, `ip`, `gen`, `error`, `rebootRequired` | status sensors, counters, device matching |
+| `GET /api/v1/devices` → `port`, `battery`, `protected` (0.7.0) | the list *Add Shellys to Home Assistant* |
+| `GET /api/v1/devices/{id}/credentials` (0.7.0; MCP token at access *configure*, or the app's loopback listener `127.0.0.1:8097`) | the password of a protected Shelly for the Shelly integration's credentials step |
+| Home Assistant's Shelly config flow: steps `confirm_discovery`, `user` (field `device` = `manual`), `user_manual` (`host`, `port`, `verify_ssl`), `credentials` (`password`; Gen1 also `username`) | adding Shellys; tested against the real flow on both Home Assistant versions |
 | `GET /api/v1/backups` → `deviceId`, `time` | last backup sensor |
 | `POST /api/v1/backup` `{"ids": [...]}` → `{"results": [{"result": "ok" / "queued" / "stored" / "fail", "message"}]}` | backup button |
 | `GET /api/v1/checklist` (every 30 min) → the ChecklistRow cells | checklist binary sensors |

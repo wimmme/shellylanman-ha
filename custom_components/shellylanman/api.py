@@ -9,8 +9,13 @@ from __future__ import annotations
 from typing import Any
 
 import aiohttp
+from yarl import URL
 
 from homeassistant.util.json import json_loads
+
+
+# The Home Assistant app's loopback listener (app option mcp_local, default on).
+LOCAL_URL = "http://127.0.0.1:8097"
 
 
 class ShellyLanManError(Exception):
@@ -68,6 +73,32 @@ class ShellyLanManClient:
     async def rescan(self) -> None:
         """Discover the devices again."""
         await self._request("POST", "/scan", {})
+
+    async def credentials(self, device_id: str) -> dict[str, Any] | None:
+        """The user and password ShellyLanMan uses for a device, or None.
+
+        ShellyLanMan hands them out only on a trusted path (its DECISIONS P13-3):
+        with the MCP token (access level "configure"), or — for the Home Assistant
+        app on this host — on the app's loopback listener (LOCAL_URL). Without
+        either the user types the password in Home Assistant.
+        """
+        path = f"/api/v1/devices/{device_id}/credentials"
+        attempts: list[tuple[str, dict[str, str]]] = []
+        if self.mcp_token:
+            attempts.append((f"{self.url}{path}", {"Authorization": f"Bearer {self.mcp_token}"}))
+        host = URL(self.url).host or ""
+        if host in ("127.0.0.1", "localhost", "::1"):
+            attempts.append((f"{LOCAL_URL}{path}", {}))
+        for url, headers in attempts:
+            try:
+                async with self._session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                    if resp.status == 200:
+                        data = await resp.json(content_type=None)
+                        if isinstance(data, dict) and data.get("password"):
+                            return data
+            except (aiohttp.ClientError, TimeoutError, ValueError):
+                continue
+        return None
 
     # ---- MCP (Streamable HTTP, JSON responses, stateless) ----
 

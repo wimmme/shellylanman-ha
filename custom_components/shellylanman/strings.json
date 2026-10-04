@@ -102,5 +102,52 @@
         "name": "Scan the network again"
       }
     }
+  },
+  "options": {
+    "step": {
+      "add": {
+        "title": "Add Shellys to Home Assistant",
+        "description": "ShellyLanMan knows {count} Shellys that are not in Home Assistant's Shelly integration: {discovered} already discovered by Home Assistant, {missed} that Home Assistant did not offer. Tick the ones to add; they are added through the Shelly integration, as if you added them there. A Shelly with a password gets the one ShellyLanMan stores (when ShellyLanMan may hand it out). Not answering now: {offline}.",
+        "data": {
+          "devices": "Shellys"
+        }
+      },
+      "result": {
+        "title": "Shellys added",
+        "description": "{added} of {total} added to the Shelly integration.\n\n{details}"
+      }
+    },
+    "abort": {
+      "nothing_to_add": "Every Shelly ShellyLanMan knows is in Home Assistant's Shelly integration (or ignored there).",
+      "not_loaded": "ShellyLanMan is not loaded; try again when it is."
+    }
+  },
+  "issues": {
+    "shellys_missing": {
+      "title": "{count} Shellys are not in Home Assistant",
+      "fix_flow": {
+        "step": {
+          "init": {
+            "title": "{count} Shellys are not in Home Assistant",
+            "description": "ShellyLanMan knows {count} Shellys that are not in Home Assistant's Shelly integration. Submit to choose which to add."
+          },
+          "add": {
+            "title": "Add Shellys to Home Assistant",
+            "description": "ShellyLanMan knows {count} Shellys that are not in Home Assistant's Shelly integration: {discovered} already discovered by Home Assistant, {missed} that Home Assistant did not offer. Tick the ones to add; they are added through the Shelly integration, as if you added them there. A Shelly with a password gets the one ShellyLanMan stores (when ShellyLanMan may hand it out). Not answering now: {offline}.",
+            "data": {
+              "devices": "Shellys"
+            }
+          },
+          "result": {
+            "title": "Shellys added",
+            "description": "{added} of {total} added to the Shelly integration.\n\n{details}"
+          }
+        },
+        "abort": {
+          "nothing_to_add": "Every Shelly ShellyLanMan knows is in Home Assistant's Shelly integration (or ignored there).",
+          "not_loaded": "ShellyLanMan is not loaded; try again when it is."
+        }
+      }
+    }
   }
 }

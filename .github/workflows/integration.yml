@@ -26,6 +26,8 @@ jobs:
         run: |
           if [ "${{ matrix.phcc }}" = latest ]; then pip install pytest-homeassistant-custom-component
           else pip install "pytest-homeassistant-custom-component==${{ matrix.phcc }}"; fi
+          # Home Assistant's own Shelly integration runs in the tests (adding Shellys).
+          pip install $(python tools/ha_reqs.py shelly)
       - name: Tests
         run: python -m pytest -q -p no:cacheprovider
 

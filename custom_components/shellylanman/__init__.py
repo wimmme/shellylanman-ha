@@ -13,11 +13,12 @@ from dataclasses import dataclass
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_URL, Platform
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryNotReady
-from homeassistant.helpers import device_registry as dr, llm
+from homeassistant.helpers import device_registry as dr, issue_registry as ir, llm
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
+from .add_flow import issue_id, update_issue
 from .api import ShellyLanManClient, ShellyLanManError
 from .const import CONF_MCP_TOKEN, DOMAIN, is_mac
 from .coordinator import ChecklistCoordinator, StateCoordinator
@@ -72,6 +73,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry)
         if ids and not any(is_mac(i) or i == entry.runtime_data.instance_id for i in ids):
             reg.async_remove_device(device.id)
 
+    # Shellys ShellyLanMan knows and the Shelly integration does not have: a repair
+    # issue while there are any (its fix and Configure add them, DECISIONS P13-4).
+    @callback
+    def _issue() -> None:
+        update_issue(hass, entry.entry_id, entry.runtime_data)
+
+    _issue()
+    entry.async_on_unload(state.async_add_listener(_issue))
+
     if client.mcp_token:  # Assist: ShellyLanMan's MCP tools as an LLM API
         entry.async_on_unload(llm.async_register_api(hass, ShellyLanManAPI(hass=hass, id=f"{DOMAIN}-{entry.entry_id}", name="ShellyLanMan", client=client)))
 
@@ -92,4 +102,5 @@ async def async_remove_config_entry_device(hass: HomeAssistant, entry: ShellyLan
 
 async def async_unload_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry) -> bool:
     """Unload an entry."""
+    ir.async_delete_issue(hass, DOMAIN, issue_id(entry.entry_id))
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)

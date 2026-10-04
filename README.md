@@ -81,6 +81,22 @@ What you get:
 Relays, lights, meters and firmware updates stay with Home Assistant's own Shelly
 integration; ShellyLanMan is not in the path of your automations.
 
+### Add your Shellys to Home Assistant
+
+Home Assistant discovers most Shellys itself, but wants one click per device, and it
+misses some (a Shelly whose announcement it did not hear). The integration's
+**Configure** — and a repair notice while Shellys are missing — lists the Shellys
+ShellyLanMan knows that are not in the Shelly integration, with the reason for each
+(discovered by Home Assistant, not offered, needs a password, not answering). Tick
+the ones you want; they are added **through the Shelly integration's own steps**, as
+if you added them there, and the result says what happened to each.
+
+A Shelly with a password gets the one ShellyLanMan stores, but only on a trusted
+path: with the app on the same host (its loopback listener), or with the MCP token
+(access level *configure*) set in the integration. Otherwise you type the password
+in Home Assistant under *Discovered*. Needs ShellyLanMan 0.7.0 for the password and
+the "protected" hint; older versions still add Shellys without a password.
+
 ### Assist
 
 - **With the app** (Home Assistant 2026.10 or newer offers it with one click): Home

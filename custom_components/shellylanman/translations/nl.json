@@ -102,5 +102,52 @@
         "name": "Netwerk opnieuw scannen"
       }
     }
+  },
+  "options": {
+    "step": {
+      "add": {
+        "title": "Shelly's toevoegen aan Home Assistant",
+        "description": "ShellyLanMan kent {count} Shelly's die niet in de Shelly-integratie van Home Assistant zitten: {discovered} al ontdekt door Home Assistant, {missed} die Home Assistant niet aanbood. Vink aan wat je wilt toevoegen; ze worden toegevoegd via de Shelly-integratie, alsof je dat daar zelf deed. Een Shelly met wachtwoord krijgt het wachtwoord dat ShellyLanMan bewaart (als ShellyLanMan het mag doorgeven). Antwoordt nu niet: {offline}.",
+        "data": {
+          "devices": "Shelly's"
+        }
+      },
+      "result": {
+        "title": "Shelly's toegevoegd",
+        "description": "{added} van {total} toegevoegd aan de Shelly-integratie.\n\n{details}"
+      }
+    },
+    "abort": {
+      "nothing_to_add": "Elke Shelly die ShellyLanMan kent, zit in de Shelly-integratie van Home Assistant (of is daar genegeerd).",
+      "not_loaded": "ShellyLanMan is niet geladen; probeer opnieuw als het geladen is."
+    }
+  },
+  "issues": {
+    "shellys_missing": {
+      "title": "{count} Shelly's zitten niet in Home Assistant",
+      "fix_flow": {
+        "step": {
+          "init": {
+            "title": "{count} Shelly's zitten niet in Home Assistant",
+            "description": "ShellyLanMan kent {count} Shelly's die niet in de Shelly-integratie van Home Assistant zitten. Druk op Verzenden om te kiezen welke je toevoegt."
+          },
+          "add": {
+            "title": "Shelly's toevoegen aan Home Assistant",
+            "description": "ShellyLanMan kent {count} Shelly's die niet in de Shelly-integratie van Home Assistant zitten: {discovered} al ontdekt door Home Assistant, {missed} die Home Assistant niet aanbood. Vink aan wat je wilt toevoegen; ze worden toegevoegd via de Shelly-integratie, alsof je dat daar zelf deed. Een Shelly met wachtwoord krijgt het wachtwoord dat ShellyLanMan bewaart (als ShellyLanMan het mag doorgeven). Antwoordt nu niet: {offline}.",
+            "data": {
+              "devices": "Shelly's"
+            }
+          },
+          "result": {
+            "title": "Shelly's toegevoegd",
+            "description": "{added} van {total} toegevoegd aan de Shelly-integratie.\n\n{details}"
+          }
+        },
+        "abort": {
+          "nothing_to_add": "Elke Shelly die ShellyLanMan kent, zit in de Shelly-integratie van Home Assistant (of is daar genegeerd).",
+          "not_loaded": "ShellyLanMan is niet geladen; probeer opnieuw als het geladen is."
+        }
+      }
+    }
   }
 }

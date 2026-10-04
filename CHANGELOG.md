@@ -2,6 +2,17 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## Unreleased
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords); Home Assistant 2026.9 or newer.
+
+- **Add Shellys to Home Assistant** (Configure, and a repair notice while Shellys are
+  missing): the Shellys ShellyLanMan knows that are not in the Shelly integration,
+  with the reason for each; the ticked ones are added through the Shelly integration's
+  own flows — confirming Home Assistant's own discoveries, or its manual flow for the
+  ones it missed — and a protected Shelly gets the password ShellyLanMan stores when
+  it may hand it out.
+
 ## 0.6.4
 
 Works with ShellyLanMan 0.5.0 or newer; Home Assistant 2026.9 or newer.

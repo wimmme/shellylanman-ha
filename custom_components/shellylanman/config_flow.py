@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
+from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResult, OptionsFlow
+from homeassistant.core import callback
 from homeassistant.const import CONF_URL
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.service_info.hassio import HassioServiceInfo
 
+from .add_flow import ShellyLanManOptionsFlow
 from .api import ShellyLanManAuthError, ShellyLanManClient, ShellyLanManError
 from .const import CONF_MCP_TOKEN, DOMAIN, vol
 
@@ -27,6 +29,12 @@ class ShellyLanManConfigFlow(ConfigFlow, domain=DOMAIN):
 
     def __init__(self) -> None:
         self._url = ""
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
+        """Configure: add the Shellys ShellyLanMan knows to Home Assistant's Shelly integration."""
+        return ShellyLanManOptionsFlow()
 
     async def _check(self, url: str, token: str | None) -> tuple[dict[str, Any] | None, str | None]:
         """Read ShellyLanMan's about (and, with a token, its MCP tools); return (about, error key)."""
