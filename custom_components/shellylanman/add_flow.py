@@ -77,6 +77,9 @@ class AddShellysSteps:
         rt = self.runtime()
         if rt is None:
             return self.async_abort(reason="not_loaded")  # type: ignore[attr-defined]
+        if user_input is None:
+            # The list from ShellyLanMan as it is now, not the last 30-second poll.
+            await rt.state.async_refresh()
         found = candidates(self.hass, rt.state.data.devices)
         addable = [c for c in found if c.state in ADDABLE]
         if not addable:
