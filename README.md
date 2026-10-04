@@ -5,11 +5,11 @@ web application that discovers, monitors and manages the Shelly devices on your 
 started from [ShellyScanner](https://github.com/usnasoft/shellyscanner), built on its basis
 and developed further.
 
-In Home Assistant's colours, light and dark (simulated devices):
+In Home Assistant's colours:
 
 <p>
-  <img src="https://raw.githubusercontent.com/wimmme/shellylanman/main/docs/images/screenshot-checklist.png" alt="Checklist, light" width="420">
-  <img src="https://raw.githubusercontent.com/wimmme/shellylanman/main/docs/images/screenshot-devices.png" alt="Devices, dark" width="420">
+  <img src="https://raw.githubusercontent.com/wimmme/shellylanman/main/docs/images/screenshot-devices.png" alt="Devices" width="420">
+  <img src="https://raw.githubusercontent.com/wimmme/shellylanman/main/docs/images/screenshot-checklist.png" alt="Checklist" width="420">
 </p>
 
 Two ways to run ShellyLanMan:
