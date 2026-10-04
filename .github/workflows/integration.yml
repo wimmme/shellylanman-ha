@@ -43,3 +43,24 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
+
+  # A GitHub release per tag (HACS needs releases, not only tags), made after the
+  # tests, hassfest and the HACS validation passed; notes from both changelogs.
+  release:
+    needs: [tests, hassfest, hacs]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release $TAG exists"
+            exit 0
+          fi
+          sh tools/release-notes.sh "$TAG" > notes.md
+          gh release create "$TAG" --verify-tag --title "$TAG" --notes-file notes.md
