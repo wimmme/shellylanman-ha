@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.0
+
+Runs ShellyLanMan 0.7.0.
+
+- With the ShellyLanMan integration 0.7.0: *Configure → Add Shellys to Home Assistant*
+  adds the Shellys ShellyLanMan knows to Home Assistant's Shelly integration in one
+  go. The app hands the integration the passwords of protected Shellys on its own
+  host only (its loopback listener).
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.6.4
 
 Runs ShellyLanMan 0.6.4.

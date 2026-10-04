@@ -3,7 +3,7 @@
 # ghcr.io/wimmme/shellylanman-ha:<version> is built from
 # ghcr.io/wimmme/shellylanman:<version> (see COMPATIBILITY.md).
 name: ShellyLanMan
-version: "0.6.4"
+version: "0.7.0"
 slug: shellylanman
 description: Discover, monitor and manage the Shelly devices on your LAN — locally, without the Shelly cloud.
 url: https://github.com/wimmme/shellylanman
