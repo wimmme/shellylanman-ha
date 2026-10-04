@@ -1,6 +1,6 @@
 # The Home Assistant app image: the ShellyLanMan release image plus an entry
 # script. ShellyLanMan itself is unchanged and runs as its own user (10001).
-ARG SHELLYLANMAN_VERSION=0.6.2
+ARG SHELLYLANMAN_VERSION=0.6.3
 FROM ghcr.io/wimmme/shellylanman:${SHELLYLANMAN_VERSION}
 
 USER root

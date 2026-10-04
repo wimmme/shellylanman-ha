@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.3
+
+Runs ShellyLanMan 0.6.3.
+
+- The script editor follows the app's light or dark look; Settings → Script editor →
+  *Editor colours* can fix it to dark or light.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.6.2
 
 Runs ShellyLanMan 0.6.2.
