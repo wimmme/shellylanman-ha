@@ -40,11 +40,25 @@ class ShellyLanManClient:
         self.mcp_token = mcp_token or None
         self._rpc_id = 0
 
+    def _on_this_host(self) -> bool:
+        """ShellyLanMan runs as the Home Assistant app on this host (its loopback listener exists)."""
+        return (URL(self.url).host or "") in ("127.0.0.1", "localhost", "::1")
+
     async def _request(self, method: str, path: str, json: Any = None) -> Any:
-        headers = {"Authorization": f"Bearer {self.mcp_token}"} if self.mcp_token else {}
+        try:
+            return await self._request_at(self.url, method, path, json)
+        except ShellyLanManLoginRequired:
+            # The app with a UI password: its loopback listener serves these calls
+            # without a token (ShellyLanMan 0.9.0, DECISIONS P15-8).
+            if not self._on_this_host():
+                raise
+            return await self._request_at(LOCAL_URL, method, path, json)
+
+    async def _request_at(self, base: str, method: str, path: str, json: Any = None) -> Any:
+        headers = {"Authorization": f"Bearer {self.mcp_token}"} if self.mcp_token and base == self.url else {}
         try:
             async with self._session.request(
-                method, f"{self.url}/api/v1{path}", json=json, headers=headers, timeout=aiohttp.ClientTimeout(total=60)
+                method, f"{base}/api/v1{path}", json=json, headers=headers, timeout=aiohttp.ClientTimeout(total=60)
             ) as resp:
                 text = await resp.text()
                 if resp.status == 401 and "login required" in text:
@@ -94,8 +108,7 @@ class ShellyLanManClient:
         attempts: list[tuple[str, dict[str, str]]] = []
         if self.mcp_token:
             attempts.append((f"{self.url}{path}", {"Authorization": f"Bearer {self.mcp_token}"}))
-        host = URL(self.url).host or ""
-        if host in ("127.0.0.1", "localhost", "::1"):
+        if self._on_this_host():
             attempts.append((f"{LOCAL_URL}{path}", {}))
         for url, headers in attempts:
             try:

@@ -46,7 +46,7 @@ What it uses of ShellyLanMan (a change there is a breaking change for the integr
 | `GET /api/v1/checklist` (every 30 min) → the ChecklistRow cells | checklist binary sensors |
 | `POST /api/v1/scan` | rescan button |
 | `POST /mcp` with the bearer token: `tools/list`, `tools/call` | the LLM API for Assist |
-| `Authorization: Bearer <MCP token>` on every `/api/v1` call; `401` with `login required` when ShellyLanMan has a UI password (0.9.0) and no valid token came | a ShellyLanMan with a password: the token is then needed; a read-only token allows reading, the backup and rescan buttons need *control* or *configure* |
+| `Authorization: Bearer <MCP token>` on every `/api/v1` call; `401` with `login required` when ShellyLanMan has a UI password (0.9.0) and no valid token came | a ShellyLanMan with a password: the token is then needed (a read-only token allows reading; the backup and rescan buttons need *control* or *configure*) — except for the app on the same host: without a token the integration then uses the app's loopback listener `127.0.0.1:8097`, which serves these calls (0.9.0) |
 
 It polls on purpose and does not keep ShellyLanMan's WebSocket open: an open
 WebSocket counts as a viewer, and with viewers ShellyLanMan polls every device every
