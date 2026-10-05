@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.1
+
+Runs ShellyLanMan 0.9.1.
+
+- Forgot ShellyLanMan's password? Open it in Home Assistant's sidebar: in *Settings →
+  Security* you can change or switch it off there without the current one.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.0
 
 Runs ShellyLanMan 0.9.0.
