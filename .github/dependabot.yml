@@ -1,0 +1,13 @@
+# Dependabot: security alerts and updates are on (repository setting); these are
+# the weekly version updates of the workflows' actions. The test requirements stay
+# pinned by hand to the Home Assistant versions the integration supports, and the
+# app's base image follows ShellyLanMan's releases (shellylanman/Dockerfile).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        update-types: [minor, patch]
