@@ -2,6 +2,12 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## 0.9.2
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
+
+- No code changes; released with the app.
+
 ## 0.9.1
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.2
+
+Runs ShellyLanMan 0.9.2.
+
+- ShellyLanMan's sidebar can be full or minimal, with the same button as Home
+  Assistant's sidebar: more room for the pages inside Home Assistant.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.1
 
 Runs ShellyLanMan 0.9.1.
