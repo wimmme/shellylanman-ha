@@ -1,5 +1,14 @@
 # ShellyLanMan for Home Assistant
 
+<p>
+  <a href="https://github.com/wimmme/shellylanman-ha/releases"><img src="https://img.shields.io/github/v/release/wimmme/shellylanman-ha?style=flat-square&amp;color=0ea5e9" alt="Release"></a>
+  <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/integration.yml"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/integration.yml?branch=main&amp;style=flat-square&amp;label=tests" alt="Tests"></a>
+  <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/github-code-scanning/codeql"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/dynamic%2Fgithub-code-scanning%2Fcodeql?branch=main&amp;style=flat-square&amp;label=CodeQL" alt="CodeQL"></a>
+  <a href="https://hacs.xyz"><img src="https://img.shields.io/badge/HACS-custom-41BDF5?style=flat-square" alt="HACS custom repository"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/wimmme/shellylanman-ha?style=flat-square&amp;color=161a3a" alt="Licence"></a>
+  <a href="https://www.paypal.com/donate/?business=LPS62D2BRTD2Y&amp;no_recurring=0&amp;item_name=You+help+me+buying+coffee+and+tokens+for+coding+%3A-%29&amp;currency_code=EUR"><img src="https://img.shields.io/badge/donate-PayPal-0070BA?style=flat-square&amp;logo=paypal&amp;logoColor=white" alt="Donate with PayPal"></a>
+</p>
+
 Home Assistant packaging of [ShellyLanMan](https://github.com/wimmme/shellylanman) — the
 web application that discovers, monitors and manages the Shelly devices on your LAN,
 started from [ShellyScanner](https://github.com/usnasoft/shellyscanner), built on its basis
