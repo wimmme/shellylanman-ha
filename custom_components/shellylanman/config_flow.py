@@ -11,7 +11,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.service_info.hassio import HassioServiceInfo
 
 from .add_flow import ShellyLanManOptionsFlow
-from .api import ShellyLanManAuthError, ShellyLanManClient, ShellyLanManError
+from .api import ShellyLanManAuthError, ShellyLanManClient, ShellyLanManError, ShellyLanManLoginRequired
 from .const import CONF_MCP_TOKEN, DOMAIN, vol
 
 
@@ -45,6 +45,8 @@ class ShellyLanManConfigFlow(ConfigFlow, domain=DOMAIN):
                 await client.mcp("tools/list")
         except ShellyLanManAuthError:
             return None, "invalid_token"
+        except ShellyLanManLoginRequired:
+            return None, "login_required"
         except ShellyLanManError:
             return None, "cannot_connect"
         if not about.get("instanceId"):

@@ -1,7 +1,8 @@
 """Client for ShellyLanMan's REST API (/api/v1) and MCP server (/mcp).
 
-The REST API has no login on the LAN (ShellyLanMan's design); the MCP server
-needs its bearer token. See COMPATIBILITY.md for what the integration relies on.
+The MCP server needs its bearer token. The REST API is open unless a UI password
+is set (ShellyLanMan 0.9.0+); then it needs the MCP token too, so the token goes
+with every request. See COMPATIBILITY.md for what the integration relies on.
 """
 
 from __future__ import annotations
@@ -26,6 +27,10 @@ class ShellyLanManAuthError(ShellyLanManError):
     """The MCP token was refused."""
 
 
+class ShellyLanManLoginRequired(ShellyLanManError):
+    """ShellyLanMan has a UI password and the request had no (valid) MCP token."""
+
+
 class ShellyLanManClient:
     """A small async client; one per config entry."""
 
@@ -36,11 +41,14 @@ class ShellyLanManClient:
         self._rpc_id = 0
 
     async def _request(self, method: str, path: str, json: Any = None) -> Any:
+        headers = {"Authorization": f"Bearer {self.mcp_token}"} if self.mcp_token else {}
         try:
             async with self._session.request(
-                method, f"{self.url}/api/v1{path}", json=json, timeout=aiohttp.ClientTimeout(total=60)
+                method, f"{self.url}/api/v1{path}", json=json, headers=headers, timeout=aiohttp.ClientTimeout(total=60)
             ) as resp:
                 text = await resp.text()
+                if resp.status == 401 and "login required" in text:
+                    raise ShellyLanManLoginRequired(f"{method} {path}: ShellyLanMan asks for a password; the MCP token is needed")
                 if resp.status >= 400:
                     raise ShellyLanManError(f"{method} {path}: HTTP {resp.status}: {text[:200]}")
                 return json_loads(text) if text.strip() else None

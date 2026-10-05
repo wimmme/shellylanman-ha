@@ -25,14 +25,16 @@
       "cannot_connect": "ShellyLanMan is niet bereikbaar op dit adres.",
       "invalid_token": "Het MCP-token werd geweigerd.",
       "too_old": "Deze ShellyLanMan is te oud: versie 0.5.0 of nieuwer is nodig.",
-      "unknown": "Onverwachte fout."
+      "unknown": "Onverwachte fout.",
+      "login_required": "ShellyLanMan is beschermd met een wachtwoord: vul zijn MCP-token in (ShellyLanMan → Instellingen → MCP)."
     },
     "abort": {
       "already_configured": "Deze ShellyLanMan is al ingesteld.",
       "cannot_connect": "ShellyLanMan is niet bereikbaar.",
       "too_old": "Deze ShellyLanMan is te oud: versie 0.5.0 of nieuwer is nodig.",
       "reconfigure_successful": "Opgeslagen.",
-      "wrong_instance": "Dat adres is een andere ShellyLanMan."
+      "wrong_instance": "Dat adres is een andere ShellyLanMan.",
+      "login_required": "ShellyLanMan is beschermd met een wachtwoord: de integratie heeft zijn MCP-token nodig (ShellyLanMan → Instellingen → MCP)."
     }
   },
   "entity": {

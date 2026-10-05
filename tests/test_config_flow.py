@@ -69,3 +69,19 @@ async def test_hassio_discovery_updates_url(hass: HomeAssistant, aioclient_mock:
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "already_configured"
     assert entry.data[CONF_URL] == new
+
+
+async def test_user_flow_password(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    """A ShellyLanMan with a UI password: without a token the form asks for it; the token goes with every call."""
+    aioclient_mock.get(f"{URL}/api/v1/about", status=401, json={"error": "login required"})
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL})
+    assert result["errors"] == {"base": "login_required"}
+
+    aioclient_mock.clear_requests()
+    mock_shellylanman(aioclient_mock)
+    aioclient_mock.post(f"{URL}/mcp", json={"jsonrpc": "2.0", "id": 1, "result": TOOLS})
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL, CONF_MCP_TOKEN: "tok"})
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    rest = [c for c in aioclient_mock.mock_calls if "/api/v1/" in str(c[1])]
+    assert rest and all(c[3].get("Authorization") == "Bearer tok" for c in rest)

@@ -25,14 +25,16 @@
       "cannot_connect": "Cannot reach ShellyLanMan at this address.",
       "invalid_token": "The MCP token was refused.",
       "too_old": "This ShellyLanMan is too old: version 0.5.0 or newer is needed.",
-      "unknown": "Unexpected error."
+      "unknown": "Unexpected error.",
+      "login_required": "ShellyLanMan is protected with a password: enter its MCP token (ShellyLanMan → Settings → MCP)."
     },
     "abort": {
       "already_configured": "This ShellyLanMan is already set up.",
       "cannot_connect": "Cannot reach ShellyLanMan.",
       "too_old": "This ShellyLanMan is too old: version 0.5.0 or newer is needed.",
       "reconfigure_successful": "Saved.",
-      "wrong_instance": "That address is another ShellyLanMan."
+      "wrong_instance": "That address is another ShellyLanMan.",
+      "login_required": "ShellyLanMan is protected with a password: the integration needs its MCP token (ShellyLanMan → Settings → MCP)."
     }
   },
   "entity": {
