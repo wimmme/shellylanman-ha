@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.8.0
+
+Runs ShellyLanMan 0.8.0.
+
+- BLU devices that a gateway only relays (such as a BLU RC Button 4) get a row of
+  their own, with battery, buttons and sensors; read only.
+- *Identify*: a wizard in which a gateway listens while you put a BLU device in
+  pairing mode, and tells its model. Nothing changes on the device or the gateway.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.7.0
 
 Runs ShellyLanMan 0.7.0.

@@ -2,6 +2,14 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## 0.8.0
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords); Home Assistant 2026.9 or newer.
+
+- No code changes. With ShellyLanMan 0.8.0, BLU devices that a gateway only relays
+  appear as devices with their status; *Add Shellys* leaves them out, as it does all
+  BLU devices.
+
 ## 0.7.0
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords); Home Assistant 2026.9 or newer.
