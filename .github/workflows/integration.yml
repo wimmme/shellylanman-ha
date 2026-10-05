@@ -10,6 +10,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Read only; the release job asks for more itself.
+permissions:
+  contents: read
+
 jobs:
   tests:
     runs-on: ubuntu-latest
