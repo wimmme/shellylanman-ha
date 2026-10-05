@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0
+
+Runs ShellyLanMan 0.9.0.
+
+- Optional password for ShellyLanMan (*Settings → Security*, off by default). In Home
+  Assistant's sidebar nothing changes: Home Assistant's login applies there. The
+  password protects the app's own port on your LAN.
+- The ShellyLanMan integration keeps working next to the app when a password is set.
+- Two security fixes found by code scanning.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.8.0
 
 Runs ShellyLanMan 0.8.0.

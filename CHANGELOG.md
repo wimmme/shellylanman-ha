@@ -2,6 +2,15 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## 0.9.0
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
+
+- A ShellyLanMan protected with a password: the integration sends the MCP token with
+  every call, and asks for it when it is missing.
+- Next to the Home Assistant app it needs no token: it then uses the app's own local
+  address.
+
 ## 0.8.0
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords); Home Assistant 2026.9 or newer.
