@@ -16,7 +16,7 @@ chown -R shellylanman:shellylanman /data
 
 # opt NAME DEFAULT: a number or true/false from /data/options.json.
 opt() {
-  v=$(sed -n "s/.*[{,] *\"$1\" *: *\([0-9a-z]*\).*/\1/p" /data/options.json 2>/dev/null | head -n 1)
+  v=$(tr -d '\r\n' < /data/options.json 2>/dev/null | sed -n "s/.*[{,][[:space:]]*\"$1\"[[:space:]]*:[[:space:]]*\([0-9a-z]*\).*/\1/p")
   echo "${v:-$2}"
 }
 
