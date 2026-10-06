@@ -10,8 +10,8 @@ RUN apk add --no-cache su-exec
 COPY run.sh /run.sh
 RUN chmod 0755 /run.sh
 
-# The image's HEALTHCHECK (shellylanman -healthcheck, which follows the port in
-# the settings) stays: the Supervisor waits for "healthy" before the app counts
+# The image's HEALTHCHECK (shellylanman -healthcheck, which reads the port in use
+# from /data/listen.port, so it follows the option "port") stays: the Supervisor waits for "healthy" before the app counts
 # as started, and its watchdog restarts an unhealthy app. "HEALTHCHECK NONE"
 # would leave the app in "startup" for ever.
 
