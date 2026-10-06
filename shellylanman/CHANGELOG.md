@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.4
+
+Runs ShellyLanMan 0.9.4.
+
+- New **Log** page in ShellyLanMan, above Settings: its own log in the browser, live, with
+  a filter by level and text, pause, clear and copy. The app's log in Home Assistant is
+  unchanged.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.3
 
 Runs ShellyLanMan 0.9.3.
