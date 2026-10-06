@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.9.3
+
+Runs ShellyLanMan 0.9.3.
+
+- Fixes a start failure ("ingress listener … address already in use") when another app
+  on the same host used port 8099: Home Assistant now chooses a free port for the
+  sidebar.
+- New options in the Configuration tab: `port` (ShellyLanMan's web UI on your LAN,
+  3082) and `mcp_local_port` (the local access for Home Assistant, 8097).
+- A port that is taken: the log says which one and where to change it.
+- ShellyLanMan's *Settings → General → Ports* shows the ports in use.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.2
 
 Runs ShellyLanMan 0.9.2.

@@ -2,6 +2,13 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## 0.9.3
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
+
+- Next to the app, the integration finds the app's local access itself, also when its
+  port was changed (option `mcp_local_port`).
+
 ## 0.9.2
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
