@@ -15,7 +15,9 @@ from yarl import URL
 from homeassistant.util.json import json_loads
 
 
-# The Home Assistant app's loopback listener (app option mcp_local, default on).
+# The Home Assistant app's loopback listener (app options mcp_local and
+# mcp_local_port). Its address comes from ShellyLanMan's status (0.9.3+); this is
+# the default for older versions.
 LOCAL_URL = "http://127.0.0.1:8097"
 
 
@@ -39,6 +41,7 @@ class ShellyLanManClient:
         self.url = url.rstrip("/")
         self.mcp_token = mcp_token or None
         self._rpc_id = 0
+        self._local_url: str | None = None
 
     def _on_this_host(self) -> bool:
         """ShellyLanMan runs as the Home Assistant app on this host (its loopback listener exists)."""
@@ -52,7 +55,20 @@ class ShellyLanManClient:
             # without a token (ShellyLanMan 0.9.0, DECISIONS P15-8).
             if not self._on_this_host():
                 raise
-            return await self._request_at(LOCAL_URL, method, path, json)
+            return await self._request_at(await self.local_url(), method, path, json)
+
+    async def local_url(self) -> str:
+        """The app's loopback listener: from ShellyLanMan's status (open without login), else the default."""
+        if self._local_url is None:
+            url = LOCAL_URL
+            try:
+                async with self._session.get(f"{self.url}/api/v1/status", timeout=aiohttp.ClientTimeout(total=15)) as resp:
+                    if resp.status == 200:
+                        url = (json_loads(await resp.text()) or {}).get("localUrl") or LOCAL_URL
+            except (aiohttp.ClientError, TimeoutError, ValueError):
+                pass
+            self._local_url = str(url).rstrip("/")
+        return self._local_url
 
     async def _request_at(self, base: str, method: str, path: str, json: Any = None) -> Any:
         headers = {"Authorization": f"Bearer {self.mcp_token}"} if self.mcp_token and base == self.url else {}
@@ -109,7 +125,7 @@ class ShellyLanManClient:
         if self.mcp_token:
             attempts.append((f"{self.url}{path}", {"Authorization": f"Bearer {self.mcp_token}"}))
         if self._on_this_host():
-            attempts.append((f"{LOCAL_URL}{path}", {}))
+            attempts.append((f"{await self.local_url()}{path}", {}))
         for url, headers in attempts:
             try:
                 async with self._session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=15)) as resp:

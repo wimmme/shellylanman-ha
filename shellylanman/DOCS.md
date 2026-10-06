@@ -14,18 +14,31 @@ After the start, **ShellyLanMan** appears in Home Assistant's sidebar. It opens 
 Home Assistant's login. Settings (scan mode, device passwords, MCP for AI assistants, …)
 are made in ShellyLanMan's own **Settings** page.
 
+## Configuration (the app's options)
+
+| Option | Default | What |
+|---|---|---|
+| `port` | 3082 | ShellyLanMan's web UI and API on your LAN, e.g. `http://homeassistant.local:3082` |
+| `mcp_local` | on | Local access on 127.0.0.1 without token, for Home Assistant on this host: Assist's MCP client and the ShellyLanMan integration (also when ShellyLanMan has a password) |
+| `mcp_local_port` | 8097 | The port of that local access |
+
+Change a port when another program on this host already uses it; the app's log then
+says which port is taken. ShellyLanMan's *Settings → General → Ports* shows the ports
+in use and where they are set.
+
 ## How it runs
 
 | | |
 |---|---|
 | Network | On the host network, so it can find devices with mDNS and reach them directly |
-| Web UI in Home Assistant | Through ingress (port 8099 on Home Assistant's internal network only) |
-| Web UI and API on the LAN | ShellyLanMan's own port, **3082** unless changed in its settings — for the MCP server (AI assistants) and direct access |
+| Web UI in Home Assistant | Through ingress, on a free port Home Assistant chooses on its internal network |
+| Web UI and API on the LAN | The option `port`, **3082** by default — for the MCP server (AI assistants) and direct access |
 | Data | The app's data folder: settings (passwords encrypted), device archive, scenes and configuration backups. It is part of Home Assistant backups |
 
-**The LAN port has no login of its own.** Anyone who can reach port 3082 of your Home
-Assistant host can use ShellyLanMan there. Keep your network trusted; do not forward
-this port to the internet.
+**Protect the LAN port with a password** (ShellyLanMan → Settings → Security): without
+one, anyone who can reach that port of your Home Assistant host can use ShellyLanMan
+there. The sidebar stays behind Home Assistant's login. Do not forward the port to the
+internet.
 
 ## Support
 

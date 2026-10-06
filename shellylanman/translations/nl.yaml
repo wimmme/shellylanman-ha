@@ -1,8 +1,20 @@
 configuration:
-  mcp_local:
-    name: MCP voor Home Assistant zonder token
+  port:
+    name: Poort van de webinterface
     description: >-
-      De MCP-server van ShellyLanMan ook aanbieden op 127.0.0.1:8097, zonder token, zodat
-      Home Assistants eigen MCP-integratie (Assist) hem kan gebruiken. Alleen programma's
-      op deze machine bereiken hem; de MCP-server moet aanstaan in ShellyLanMan
-      (Instellingen → MCP), en het toegangsniveau blijft gelden.
+      De webinterface en API van ShellyLanMan op je LAN (standaard 3082), bv.
+      http://homeassistant.local:3082. Wijzig hem als een ander programma op deze host
+      3082 gebruikt. De zijbalk heeft hem niet nodig.
+  mcp_local:
+    name: Lokale toegang voor Home Assistant zonder token
+    description: >-
+      De MCP-server van ShellyLanMan en de aanroepen van de ShellyLanMan-integratie
+      aanbieden op 127.0.0.1 zonder token, zodat Home Assistant op deze host (de
+      MCP-client van Assist, de integratie) ze kan gebruiken, ook als ShellyLanMan een
+      wachtwoord heeft. Alleen programma's op deze machine bereiken hem; voor MCP moet de
+      MCP-server aanstaan in ShellyLanMan (Instellingen → MCP) en geldt zijn toegangsniveau.
+  mcp_local_port:
+    name: Poort van de lokale toegang
+    description: >-
+      De poort op 127.0.0.1 voor de lokale toegang hierboven (standaard 8097). Wijzig hem
+      als een ander programma op deze host 8097 gebruikt; de integratie volgt vanzelf.

@@ -15,7 +15,10 @@ arch:
 host_network: true
 # The web UI in Home Assistant's sidebar, behind Home Assistant's login.
 ingress: true
-ingress_port: 8099
+# 0: the Supervisor chooses a free port (no clash with another app on the host
+# network); ShellyLanMan asks for it at start (Supervisor API, hassio_api).
+ingress_port: 0
+hassio_api: true
 panel_icon: mdi:lan
 panel_title: ShellyLanMan
 # /data (settings, archive, scenes, configuration backups) goes into HA backups.
@@ -26,7 +29,14 @@ init: false
 discovery:
   - shellylanman
   - mcp
+# port: ShellyLanMan's web UI and API on the LAN (SHELLYLANMAN_PORT).
+# mcp_local / mcp_local_port: the token-less listener on 127.0.0.1 for Home
+# Assistant on this host (its MCP client and the ShellyLanMan integration).
 options:
+  port: 3082
   mcp_local: true
+  mcp_local_port: 8097
 schema:
+  port: port
   mcp_local: bool
+  mcp_local_port: port

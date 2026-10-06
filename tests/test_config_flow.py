@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from unittest.mock import patch
-
 from homeassistant import config_entries
 from homeassistant.const import CONF_URL
 from homeassistant.core import HomeAssistant
@@ -90,16 +88,16 @@ async def test_user_flow_password(hass: HomeAssistant, aioclient_mock: AiohttpCl
 
 
 async def test_app_with_password_uses_loopback(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
-    """The app on this host with a UI password: without a token the calls go to its loopback listener."""
+    """The app on this host with a UI password: the calls go to its loopback listener, found in the open status."""
     local = "http://127.0.0.1:3082"
-    loopback = "http://localhost:8097"  # the mocker ignores ports: another host name for the listener
+    loopback = "http://localhost:8197"  # the app's option mcp_local_port; the mocker ignores ports: another host name
     aioclient_mock.get(f"{local}/api/v1/about", status=401, json={"error": "login required"})
+    aioclient_mock.get(f"{local}/api/v1/status", json={"authEnabled": True, "loggedIn": False, "localUrl": loopback})
     mock_shellylanman(aioclient_mock, url=loopback)
-    with patch("custom_components.shellylanman.api.LOCAL_URL", loopback):
-        result = await hass.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": config_entries.SOURCE_HASSIO},
-            data=HassioServiceInfo(config={"url": local}, name="ShellyLanMan", slug="shellylanman", uuid="x"),
-        )
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN,
+        context={"source": config_entries.SOURCE_HASSIO},
+        data=HassioServiceInfo(config={"url": local}, name="ShellyLanMan", slug="shellylanman", uuid="x"),
+    )
     assert result["type"] is FlowResultType.FORM, result  # ShellyLanMan answered through the loopback listener
     assert any(str(c[1]).startswith(f"{loopback}/api/v1/about") for c in aioclient_mock.mock_calls)
