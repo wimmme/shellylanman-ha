@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.9.5
+
+Runs ShellyLanMan 0.9.5.
+
+- **Security:** a device's live log could be opened without the ShellyLanMan password; it is
+  now behind the login. The raw RPC endpoint asks for confirmation for risky methods and
+  refuses a factory reset.
+- New wizard **Set up a new Shelly** with profiles (*Settings → Profiles*), and a wizard to
+  update firmware through a device's own access point (Firmware page), both with QR codes.
+- A device with a newer stable firmware shows ↑ after its status.
+- The REST API is described in OpenAPI 3.1 (`/api/v1/openapi.json`).
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.4
 
 Runs ShellyLanMan 0.9.4.
