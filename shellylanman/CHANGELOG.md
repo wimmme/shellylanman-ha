@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.6
+
+Runs ShellyLanMan 0.9.6.
+
+- New **Create profile…** on the Devices page: make a profile from the settings of a Shelly you
+  already set up, with a tick per setting (the ones that differ from the factory are ticked).
+- The update notice inside ShellyLanMan now follows this app's releases, and has no
+  "Skip this version" (Home Assistant shows the update anyway).
+- *Check for new ShellyLanMan versions* is the first setting under *Settings → General*.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.5
 
 Runs ShellyLanMan 0.9.5.
