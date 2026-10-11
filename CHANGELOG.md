@@ -2,7 +2,9 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
-## Unreleased
+## 0.9.7
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
 
 - Reads ShellyLanMan's coded errors (`{"error": {"code", "message"}}`, ShellyLanMan 0.9.7) and still the
   plain ones of earlier versions; a password-protected ShellyLanMan is recognised by the code `login_required`.

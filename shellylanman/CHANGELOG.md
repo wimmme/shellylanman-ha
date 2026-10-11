@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.7
+
+Runs ShellyLanMan 0.9.7.
+
+- **Create profile…** opens at once and shows that the device is being read; a device that does not answer
+  is shown in the dialog.
+- Groundwork for 1.0: every data file carries a version, and the REST API's errors carry a code.
+- Before release the changes were checked with an automated code review (Claude Code's *ultrareview*); what it
+  found is fixed.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.6
 
 Runs ShellyLanMan 0.9.6.
