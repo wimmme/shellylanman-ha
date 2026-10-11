@@ -8,6 +8,7 @@ from custom_components.shellylanman.api import _error_of
 def test_error_of_coded() -> None:
     """ShellyLanMan 0.9.7+: {"error": {"code", "message"}}."""
     assert _error_of('{"error": {"code": "device_offline", "message": "timeout"}}') == ("device_offline", "timeout")
+    assert _error_of('{"error": {"code": "internal"}}') == ("internal", "internal")  # never an empty message
 
 
 def test_error_of_before_codes() -> None:

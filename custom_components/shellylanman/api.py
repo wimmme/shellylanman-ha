@@ -47,7 +47,7 @@ def _error_of(text: str) -> tuple[str | None, str]:
     except (ValueError, AttributeError):
         return None, text[:200]
     if isinstance(err, dict):
-        return err.get("code"), str(err.get("message") or "")
+        return err.get("code"), str(err.get("message") or err.get("code") or text[:200])
     return None, str(err or text[:200])
 
 
