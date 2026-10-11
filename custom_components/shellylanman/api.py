@@ -22,7 +22,14 @@ LOCAL_URL = "http://127.0.0.1:8097"
 
 
 class ShellyLanManError(Exception):
-    """ShellyLanMan could not be reached or answered with an error."""
+    """ShellyLanMan could not be reached or answered with an error.
+
+    code is ShellyLanMan's error code (0.9.7+, e.g. "device_offline"), None otherwise.
+    """
+
+    def __init__(self, message: str, code: str | None = None) -> None:
+        super().__init__(message)
+        self.code = code
 
 
 class ShellyLanManAuthError(ShellyLanManError):
@@ -31,6 +38,17 @@ class ShellyLanManAuthError(ShellyLanManError):
 
 class ShellyLanManLoginRequired(ShellyLanManError):
     """ShellyLanMan has a UI password and the request had no (valid) MCP token."""
+
+
+def _error_of(text: str) -> tuple[str | None, str]:
+    """Code and message of an error answer: {"error": {"code", "message"}} (0.9.7), {"error": "…"} before."""
+    try:
+        err = (json_loads(text) or {}).get("error")
+    except (ValueError, AttributeError):
+        return None, text[:200]
+    if isinstance(err, dict):
+        return err.get("code"), str(err.get("message") or "")
+    return None, str(err or text[:200])
 
 
 class ShellyLanManClient:
@@ -77,10 +95,13 @@ class ShellyLanManClient:
                 method, f"{base}/api/v1{path}", json=json, headers=headers, timeout=aiohttp.ClientTimeout(total=60)
             ) as resp:
                 text = await resp.text()
-                if resp.status == 401 and "login required" in text:
-                    raise ShellyLanManLoginRequired(f"{method} {path}: ShellyLanMan asks for a password; the MCP token is needed")
                 if resp.status >= 400:
-                    raise ShellyLanManError(f"{method} {path}: HTTP {resp.status}: {text[:200]}")
+                    code, message = _error_of(text)
+                    if resp.status == 401 and (code == "login_required" or (code is None and "login required" in text)):
+                        raise ShellyLanManLoginRequired(
+                            f"{method} {path}: ShellyLanMan asks for a password; the MCP token is needed", "login_required"
+                        )
+                    raise ShellyLanManError(f"{method} {path}: HTTP {resp.status}: {message}", code)
                 return json_loads(text) if text.strip() else None
         except ValueError as err:
             raise ShellyLanManError(f"{method} {path}: not JSON") from err

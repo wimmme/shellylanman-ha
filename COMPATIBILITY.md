@@ -46,7 +46,10 @@ What it uses of ShellyLanMan (a change there is a breaking change for the integr
 | `GET /api/v1/checklist` (every 30 min) → the ChecklistRow cells | checklist binary sensors |
 | `POST /api/v1/scan` | rescan button |
 | `POST /mcp` with the bearer token: `tools/list`, `tools/call` | the LLM API for Assist |
-| `Authorization: Bearer <MCP token>` on every `/api/v1` call; `401` with `login required` when ShellyLanMan has a UI password (0.9.0) and no valid token came | a ShellyLanMan with a password: the token is then needed (a read-only token allows reading; the backup and rescan buttons need *control* or *configure*) — except for the app on the same host: without a token the integration then uses the app's loopback listener, which serves these calls (0.9.0); its address is `localUrl` in the open `GET /api/v1/status` (0.9.3; before: `127.0.0.1:8097`) |
+| `Authorization: Bearer <MCP token>` on every `/api/v1` call; `401` with the error code `login_required` (0.9.7; before: the text `login required`) when ShellyLanMan has a UI password (0.9.0) and no valid token came | a ShellyLanMan with a password: the token is then needed (a read-only token allows reading; the backup and rescan buttons need *control* or *configure*) — except for the app on the same host: without a token the integration then uses the app's loopback listener, which serves these calls (0.9.0); its address is `localUrl` in the open `GET /api/v1/status` (0.9.3; before: `127.0.0.1:8097`) |
+
+Errors: `{"error": {"code", "message"}}` from ShellyLanMan 0.9.7 (its DECISIONS P22-2), `{"error": "…"}`
+before; the integration reads both and keeps the code on `ShellyLanManError.code`.
 
 It polls on purpose and does not keep ShellyLanMan's WebSocket open: an open
 WebSocket counts as a viewer, and with viewers ShellyLanMan polls every device every

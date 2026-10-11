@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import pytest
 from homeassistant import config_entries
 from homeassistant.const import CONF_URL
 from homeassistant.core import HomeAssistant
@@ -71,9 +72,16 @@ async def test_hassio_discovery_updates_url(hass: HomeAssistant, aioclient_mock:
     assert entry.data[CONF_URL] == new
 
 
-async def test_user_flow_password(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+@pytest.mark.parametrize(
+    "body",
+    [
+        {"error": {"code": "login_required", "message": "login required"}},  # ShellyLanMan 0.9.7+
+        {"error": "login required"},  # 0.9.0 – 0.9.6
+    ],
+)
+async def test_user_flow_password(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, body: dict) -> None:
     """A ShellyLanMan with a UI password: without a token the form asks for it; the token goes with every call."""
-    aioclient_mock.get(f"{URL}/api/v1/about", status=401, json={"error": "login required"})
+    aioclient_mock.get(f"{URL}/api/v1/about", status=401, json=body)
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
     result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL})
     assert result["errors"] == {"base": "login_required"}
