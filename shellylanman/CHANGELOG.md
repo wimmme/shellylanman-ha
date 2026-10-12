@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.8
+
+Runs ShellyLanMan 0.9.8.
+
+- Stability only, no new features.
+- A broken data file no longer costs you your notes or deferred tasks: it is kept aside as `<name>.broken-<time>`.
+- A ShellyLanMan page left open during an update shows a banner to reload it.
+- *Create profile…* stops reading the device when you close the dialog.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.7
 
 Runs ShellyLanMan 0.9.7.
