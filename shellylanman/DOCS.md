@@ -14,6 +14,16 @@ After the start, **ShellyLanMan** appears in Home Assistant's sidebar. It opens 
 Home Assistant's login. Settings (scan mode, device passwords, MCP for AI assistants, …)
 are made in ShellyLanMan's own **Settings** page.
 
+### Firmware through a device's access point
+
+The firmware wizard (Firmware → *Through an access point…*) gives your phone the firmware
+file from ShellyLanMan, by QR code or a Download button. It works best on the phone
+itself. In the sidebar the link uses ShellyLanMan's own port (option `port`) on the
+address you opened Home Assistant with, e.g. `http://192.168.1.10:3082/fw/…`. When you
+reach Home Assistant through a name or a reverse proxy, the phone may not reach that
+port there: set the address in ShellyLanMan → *Settings → Network → Address of
+ShellyLanMan for phones*, e.g. `http://192.168.1.10:3082`.
+
 ## Configuration (the app's options)
 
 | Option | Default | What |
