@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.10
+
+Runs ShellyLanMan 0.9.10.
+
+- Firmware wizard: *Download* shows a progress bar and says when the file is saved; it also works in the app
+  installed on a phone and behind an HTTPS reverse proxy.
+- Firmware page: a box per row follows the ticked version, "-" where there is nothing newer, and a new column
+  *Local update* with the ⚡ for the access-point wizard.
+- About checks for a new release when you open it, and ↻ checks at once.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.9
 
 Runs ShellyLanMan 0.9.9.
