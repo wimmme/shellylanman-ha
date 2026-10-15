@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.9
+
+Runs ShellyLanMan 0.9.9.
+
+- Firmware through a device's access point: from the sidebar the download link no longer answers 404; it uses
+  the app's own port (option `port`), with a tip where to set the address for phones if your phone cannot open it.
+- The firmware wizard works on the phone itself: a Download button next to the QR code, a clickable device address,
+  and texts that say when to scan and when to tap.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.8
 
 Runs ShellyLanMan 0.9.8.
