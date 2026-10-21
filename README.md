@@ -56,14 +56,14 @@ ShellyLanMan work together.
 
 ## Install the integration
 
-Needs ShellyLanMan **0.5.0** or newer (the app, or the Docker version) and HACS.
+Needs ShellyLanMan **0.5.0** or newer (the app, or the Docker version). The integration
+is in the HACS default list, so it is in Home Assistant's **Marketplace** too (Home
+Assistant 2026.11 and newer, *Settings → Marketplace*, where HACS moved).
 
-1. Open the repository in HACS and download **ShellyLanMan**, then restart Home
-   Assistant:
+1. Search for **ShellyLanMan** in the Marketplace (or in HACS before Home Assistant
+   2026.11), download it, then restart Home Assistant. With HACS this button opens it:
 
    [![Open the repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
-
-   (By hand: search for **ShellyLanMan** in HACS — it is in the HACS default list.)
 2. With the app, Home Assistant offers **ShellyLanMan** under *Settings → Devices &
    services → Discovered*: one click. Otherwise add it with ShellyLanMan's address
    (`http://<host>:3082`):
