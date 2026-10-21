@@ -14,12 +14,12 @@ from dataclasses import dataclass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_URL, Platform
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from homeassistant.helpers import device_registry as dr, issue_registry as ir, llm
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .add_flow import issue_id, update_issue
-from .api import ShellyLanManClient, ShellyLanManError
+from .api import ShellyLanManAuthError, ShellyLanManClient, ShellyLanManError, ShellyLanManLoginRequired
 from .const import CONF_MCP_TOKEN, DOMAIN, is_mac
 from .coordinator import ChecklistCoordinator, StateCoordinator
 from .llm_api import ShellyLanManAPI
@@ -45,8 +45,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry)
     client = ShellyLanManClient(async_get_clientsession(hass), entry.data[CONF_URL], entry.data.get(CONF_MCP_TOKEN))
     try:
         about = await client.about()
+    except ShellyLanManLoginRequired as err:  # a UI password since set-up: the token is needed
+        raise ConfigEntryAuthFailed(str(err)) from err
     except ShellyLanManError as err:
         raise ConfigEntryNotReady(str(err)) from err
+    if client.mcp_token:
+        # A refused token asks for a new one (reauth); the rest works without it.
+        try:
+            await client.mcp("tools/list")
+        except ShellyLanManAuthError:
+            entry.async_start_reauth(hass)
+        except ShellyLanManError:
+            pass  # MCP switched off or not reachable now: Assist reports it when used
+        client.on_auth_error = lambda: entry.async_start_reauth(hass)
 
     state = StateCoordinator(hass, entry, client)
     checklist = ChecklistCoordinator(hass, entry, client)

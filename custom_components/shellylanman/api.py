@@ -7,6 +7,7 @@ with every request. See COMPATIBILITY.md for what the integration relies on.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from typing import Any
 
 import aiohttp
@@ -60,6 +61,8 @@ class ShellyLanManClient:
         self.mcp_token = mcp_token or None
         self._rpc_id = 0
         self._local_url: str | None = None
+        # Called when ShellyLanMan refuses the MCP token (the entry starts a reauth).
+        self.on_auth_error: Callable[[], None] | None = None
 
     def _on_this_host(self) -> bool:
         """ShellyLanMan runs as the Home Assistant app on this host (its loopback listener exists)."""
@@ -172,6 +175,8 @@ class ShellyLanManClient:
                 f"{self.url}/mcp", json=body, headers=headers, timeout=aiohttp.ClientTimeout(total=90)
             ) as resp:
                 if resp.status == 401:
+                    if self.on_auth_error:
+                        self.on_auth_error()
                     raise ShellyLanManAuthError("MCP token refused")
                 if resp.status == 404:
                     raise ShellyLanManError("the MCP server is switched off in ShellyLanMan (Settings → MCP)")

@@ -5,6 +5,9 @@ The app has its own changelog in `shellylanman/CHANGELOG.md`.
 ## Unreleased
 
 - The integration is in the HACS default list (2026-10-21): search for ShellyLanMan in HACS, no custom repository needed (README).
+- **Asks for a new MCP token** (reauthentication) when ShellyLanMan refuses the token, or when ShellyLanMan got a UI password after the integration was set up. Before, the integration stopped working or Assist failed, and you had to use *Reconfigure*.
+- One backup at a time when several *Back up configuration* buttons are pressed together.
+- Quality scale: Silver met. Tests for the error paths: 99 % coverage.
 - Quality scale: a self-assessment against Home Assistant's integration quality scale (`QUALITY_SCALE.md`); the Bronze rules are met. For that: field descriptions in the set-up and reconfigure forms, tests for the whole config flow (already configured, discovery failing, reconfigure), and removal instructions in the README.
 - README: more badges (app build, Home Assistant 2026.9+, Docker image, platforms, Shelly generations, languages), like ShellyLanMan's.
 - README: from Home Assistant 2026.11 the integration is found in the Marketplace (*Settings → Marketplace*), which replaces HACS.

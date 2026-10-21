@@ -15,6 +15,9 @@ from .const import ATTENTION, STATUSES
 from .coordinator import StateCoordinator
 from .entity import DeviceEntity, ServiceEntity
 
+# Coordinator entities: no updates of their own.
+PARALLEL_UPDATES = 0
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry, add: AddConfigEntryEntitiesCallback) -> None:
     """Add the sensors, and those of devices that appear later."""

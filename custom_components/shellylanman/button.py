@@ -12,6 +12,9 @@ from .api import ShellyLanManError
 from .coordinator import StateCoordinator
 from .entity import DeviceEntity, ServiceEntity
 
+# One press at a time: a backup reads the whole device.
+PARALLEL_UPDATES = 1
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry, add: AddConfigEntryEntitiesCallback) -> None:
     """Add the buttons, and those of devices that appear later."""

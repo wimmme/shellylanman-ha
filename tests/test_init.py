@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pytest
 
+from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import device_registry as dr, entity_registry as er, llm
@@ -89,7 +90,7 @@ async def test_llm_api(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker,
     assert [t.name for t in instance.tools] == ["shelly_list_devices", "shelly_switch"]
 
     aioclient_mock.clear_requests()
-    mock_shellylanman(aioclient_mock)
+    mock_shellylanman(aioclient_mock, mcp=False)
     aioclient_mock.post(f"{URL}/mcp", json={"jsonrpc": "2.0", "id": 2, "result": {"content": [{"type": "text", "text": "done"}]}})
     tool = next(t for t in instance.tools if t.name == "shelly_switch")
     tool_input = llm.ToolInput(tool_name="shelly_switch", tool_args={"device": "Grondwaterpomp", "action": "on"})
@@ -137,3 +138,24 @@ async def test_device_per_shelly_and_no_unidentified(hass: HomeAssistant, aiocli
     dev = next((d for d in dr.async_entries_for_config_entry(reg, entry.entry_id) if (DOMAIN, "ECE334F95020") in d.identifiers), None)
     assert dev and dev.name == "LedBerging" and dev.manufacturer == "Shelly" and dev.model == "Shelly Pro RGBWW PM"
     assert (dr.CONNECTION_NETWORK_MAC, "ec:e3:34:f9:50:20") in dev.connections
+
+
+async def test_refused_token_starts_reauth(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, entry: MockConfigEntry) -> None:
+    """A refused MCP token: the entry still loads (the REST API is open) and asks for a new token."""
+    mock_shellylanman(aioclient_mock, mcp=False)
+    aioclient_mock.post(f"{URL}/mcp", status=401)
+    await _setup(hass, entry)
+    assert entry.state is ConfigEntryState.LOADED
+    assert [f["context"]["source"] for f in hass.config_entries.flow.async_progress_by_handler(DOMAIN)] == ["reauth"]
+
+
+async def test_password_since_setup_starts_reauth(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    """The poll gets "login required": the entry asks for the MCP token."""
+    mock_shellylanman(aioclient_mock)
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=INSTANCE, data={"url": URL})
+    await _setup(hass, entry)
+    aioclient_mock.clear_requests()
+    aioclient_mock.get(f"{URL}/api/v1/about", status=401, json={"error": {"code": "login_required", "message": "login required"}})
+    await entry.runtime_data.state.async_refresh()
+    await hass.async_block_till_done()
+    assert [f["context"]["source"] for f in hass.config_entries.flow.async_progress_by_handler(DOMAIN)] == ["reauth"]

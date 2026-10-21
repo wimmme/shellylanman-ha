@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResult, OptionsFlow
@@ -89,6 +90,30 @@ class ShellyLanManConfigFlow(ConfigFlow, domain=DOMAIN):
             return self.async_create_entry(title="ShellyLanMan", data={CONF_URL: self._url})
         self._set_confirm_only()
         return self.async_show_form(step_id="hassio_confirm", description_placeholders={"url": self._url})
+
+    async def async_step_reauth(self, entry_data: Mapping[str, Any]) -> ConfigFlowResult:
+        """ShellyLanMan refused the MCP token, or wants one (a UI password since set-up)."""
+        return await self.async_step_reauth_confirm()
+
+    async def async_step_reauth_confirm(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+        """Ask for the MCP token."""
+        entry = self._get_reauth_entry()
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            token = user_input[CONF_MCP_TOKEN].strip()
+            about, error = await self._check(entry.data[CONF_URL], token)
+            if about:
+                await self.async_set_unique_id(about["instanceId"])
+                self._abort_if_unique_id_mismatch(reason="wrong_instance")
+                return self.async_update_reload_and_abort(entry, data_updates={CONF_MCP_TOKEN: token})
+            # With a token, "password needed" means that token is not accepted.
+            errors["base"] = "invalid_token" if error == "login_required" else error or "unknown"
+        return self.async_show_form(
+            step_id="reauth_confirm",
+            data_schema=vol.Schema({vol.Required(CONF_MCP_TOKEN): str}),
+            description_placeholders={"url": entry.data[CONF_URL]},
+            errors=errors,
+        )
 
     async def async_step_reconfigure(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Change the URL or the MCP token."""

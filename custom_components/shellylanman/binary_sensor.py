@@ -13,6 +13,9 @@ from .checklist import ITEMS, NOT_APPLICABLE, cell_detail, cell_state
 from .coordinator import ChecklistCoordinator
 from .entity import DeviceEntity
 
+# Coordinator entities: no updates of their own.
+PARALLEL_UPDATES = 0
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry, add: AddConfigEntryEntitiesCallback) -> None:
     """Add a checklist entity for every item that applies to a device; more when devices appear."""

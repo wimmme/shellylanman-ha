@@ -41,7 +41,7 @@ async def test_user_flow_errors(hass: HomeAssistant, aioclient_mock: AiohttpClie
     assert result["errors"] == {"base": "too_old"}
 
     aioclient_mock.clear_requests()
-    mock_shellylanman(aioclient_mock)
+    mock_shellylanman(aioclient_mock, mcp=False)
     aioclient_mock.post(f"{URL}/mcp", status=401)
     result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL, CONF_MCP_TOKEN: "bad"})
     assert result["errors"] == {"base": "invalid_token"}
@@ -165,3 +165,41 @@ async def test_reconfigure_other_instance(hass: HomeAssistant, aioclient_mock: A
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "wrong_instance"
     assert entry.data == {CONF_URL: "http://192.0.2.99:3082"}
+
+
+async def test_reauth(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    """ShellyLanMan got a UI password after set-up: the entry asks for the MCP token."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=INSTANCE, data={CONF_URL: URL})
+    entry.add_to_hass(hass)
+    aioclient_mock.get(f"{URL}/api/v1/about", status=401, json={"error": {"code": "login_required", "message": "login required"}})
+    assert not await hass.config_entries.async_setup(entry.entry_id)
+    assert entry.state is config_entries.ConfigEntryState.SETUP_ERROR
+    flows = hass.config_entries.flow.async_progress_by_handler(DOMAIN)
+    assert [f["step_id"] for f in flows] == ["reauth_confirm"]
+
+    result = await hass.config_entries.flow.async_configure(flows[0]["flow_id"], {CONF_MCP_TOKEN: "bad"})
+    assert result["errors"] == {"base": "invalid_token"}  # still "password needed": the token is not accepted
+
+    aioclient_mock.clear_requests()
+    mock_shellylanman(aioclient_mock)
+    aioclient_mock.post(f"{URL}/mcp", json={"jsonrpc": "2.0", "id": 1, "result": TOOLS})
+    result = await hass.config_entries.flow.async_configure(flows[0]["flow_id"], {CONF_MCP_TOKEN: " tok "})
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "reauth_successful"
+    assert entry.data == {CONF_URL: URL, CONF_MCP_TOKEN: "tok"}
+    await hass.async_block_till_done()
+    assert entry.state is config_entries.ConfigEntryState.LOADED
+    assert await hass.config_entries.async_unload(entry.entry_id)
+
+
+async def test_reauth_other_instance(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=INSTANCE, data={CONF_URL: URL, CONF_MCP_TOKEN: "old"})
+    entry.add_to_hass(hass)
+    mock_shellylanman(aioclient_mock, instance="another")
+    aioclient_mock.post(f"{URL}/mcp", json={"jsonrpc": "2.0", "id": 1, "result": TOOLS})
+    result = await entry.start_reauth_flow(hass)
+    assert result["step_id"] == "reauth_confirm"
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_MCP_TOKEN: "tok"})
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "wrong_instance"
+    assert entry.data[CONF_MCP_TOKEN] == "old"

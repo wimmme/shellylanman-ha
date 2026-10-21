@@ -49,14 +49,16 @@ def auto_enable_custom_integrations(enable_custom_integrations: None) -> None:
     """Load custom_components/shellylanman."""
 
 
-def mock_shellylanman(aioclient_mock: AiohttpClientMocker, url: str = URL, instance: str = INSTANCE) -> None:
-    """Answer ShellyLanMan's API and MCP like version 0.5.0."""
+def mock_shellylanman(aioclient_mock: AiohttpClientMocker, url: str = URL, instance: str = INSTANCE, mcp: bool = True) -> None:
+    """Answer ShellyLanMan's API and MCP like version 0.5.0 (the first mock of a URL wins: mcp=False to answer /mcp yourself)."""
     aioclient_mock.get(f"{url}/api/v1/about", json={"name": "ShellyLanMan", "version": "v0.5.0", "instanceId": instance})
     aioclient_mock.get(f"{url}/api/v1/devices", json=DEVICES)
     aioclient_mock.get(f"{url}/api/v1/checklist", json=CHECKLIST)
     aioclient_mock.get(f"{url}/api/v1/backups", json=BACKUPS)
     aioclient_mock.post(f"{url}/api/v1/backup", json={"results": [{"id": "80646F838136", "name": "shellyplug-s-80646F838136", "result": "ok"}]})
     aioclient_mock.post(f"{url}/api/v1/scan", status=202)
+    if mcp:
+        aioclient_mock.post(f"{url}/mcp", json={"jsonrpc": "2.0", "id": 1, "result": TOOLS})
 
 
 @pytest.fixture

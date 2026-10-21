@@ -13,9 +13,10 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .api import ShellyLanManClient, ShellyLanManError
+from .api import ShellyLanManClient, ShellyLanManError, ShellyLanManLoginRequired
 from .const import CHECKLIST_INTERVAL, DOMAIN, SCAN_INTERVAL, is_mac
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,6 +45,8 @@ class StateCoordinator(DataUpdateCoordinator[State]):
             about = await self.client.about()
             devices = await self.client.devices()
             backups = await self.client.backups()
+        except ShellyLanManLoginRequired as err:
+            raise ConfigEntryAuthFailed(str(err)) from err
         except ShellyLanManError as err:
             raise UpdateFailed(str(err)) from err
         last: dict[str, int] = {}
@@ -70,6 +73,8 @@ class ChecklistCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
     async def _async_update_data(self) -> dict[str, dict[str, Any]]:
         try:
             rows = await self.client.checklist()
+        except ShellyLanManLoginRequired as err:
+            raise ConfigEntryAuthFailed(str(err)) from err
         except ShellyLanManError as err:
             raise UpdateFailed(str(err)) from err
         return {r["id"]: r for r in rows if r.get("id")}

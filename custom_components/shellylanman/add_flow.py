@@ -66,10 +66,10 @@ class AddShellysSteps:
     hass: HomeAssistant
     _results: list[Result]
 
-    def runtime(self) -> RuntimeData | None:
+    def runtime(self) -> RuntimeData | None:  # pragma: no cover - provided by the flow
         raise NotImplementedError
 
-    def done(self) -> FlowResult:
+    def done(self) -> FlowResult:  # pragma: no cover - provided by the flow
         raise NotImplementedError
 
     async def async_step_add(self, user_input: dict[str, Any] | None = None) -> FlowResult:

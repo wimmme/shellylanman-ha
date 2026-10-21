@@ -17,6 +17,16 @@
         "title": "ShellyLanMan",
         "description": "ShellyLanMan toevoegen, dat als Home Assistant-app draait ({url})?"
       },
+      "reauth_confirm": {
+        "title": "ShellyLanMan: MCP-token",
+        "description": "ShellyLanMan op {url} weigerde het MCP-token, of heeft nu een wachtwoord en heeft er een nodig. Vul het MCP-token in uit ShellyLanMan → Instellingen → MCP.",
+        "data": {
+          "mcp_token": "MCP-token"
+        },
+        "data_description": {
+          "mcp_token": "ShellyLanMan → Instellingen → MCP."
+        }
+      },
       "reconfigure": {
         "title": "ShellyLanMan",
         "data": {
@@ -42,7 +52,8 @@
       "too_old": "Deze ShellyLanMan is te oud: versie 0.5.0 of nieuwer is nodig.",
       "reconfigure_successful": "Opgeslagen.",
       "wrong_instance": "Dat adres is een andere ShellyLanMan.",
-      "login_required": "ShellyLanMan is beschermd met een wachtwoord: de integratie heeft zijn MCP-token nodig (ShellyLanMan → Instellingen → MCP)."
+      "login_required": "ShellyLanMan is beschermd met een wachtwoord: de integratie heeft zijn MCP-token nodig (ShellyLanMan → Instellingen → MCP).",
+      "reauth_successful": "Het nieuwe MCP-token is opgeslagen."
     }
   },
   "entity": {

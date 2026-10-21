@@ -35,7 +35,7 @@ what to expect and what is still open. Last checked: 2026-10-22, version 0.9.10 
 | test-before-setup | done | `ConfigEntryNotReady` when ShellyLanMan cannot be reached |
 | unique-config-entry | done | Unique id = ShellyLanMan's instance id |
 
-## Silver — not yet
+## Silver — met
 
 | Rule | | How |
 |---|---|---|
@@ -46,9 +46,9 @@ what to expect and what is still open. Last checked: 2026-10-22, version 0.9.10 
 | entity-unavailable | done | Coordinator entities |
 | integration-owner | done | `codeowners` |
 | log-when-unavailable | done | The coordinators log once on loss and once on return |
-| parallel-updates | todo | `PARALLEL_UPDATES` not set on the platforms |
-| reauthentication-flow | todo | A refused MCP token needs *Reconfigure* now, not a reauth notice |
-| test-coverage | todo | 92 % overall; below 95 %: `__init__` 91, `api` 90, `button` 90, `coordinator` 90, `llm_api` 83, `shelly_add` 84, `add_flow` 94 |
+| parallel-updates | done | 0 for the sensors (coordinator), 1 for the buttons (one backup at a time) |
+| reauthentication-flow | done | A refused MCP token, or a UI password set after set-up, asks for a new token |
+| test-coverage | done | 99 % overall, every module 96 % or more |
 
 ## Gold
 
