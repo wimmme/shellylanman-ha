@@ -2,6 +2,10 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## Unreleased
+
+- The integration is in the HACS default list (2026-10-21): search for ShellyLanMan in HACS, no custom repository needed (README).
+
 ## 0.9.10
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.

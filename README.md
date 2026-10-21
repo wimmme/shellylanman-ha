@@ -4,7 +4,7 @@
   <a href="https://github.com/wimmme/shellylanman-ha/releases"><img src="https://img.shields.io/github/v/release/wimmme/shellylanman-ha?style=flat-square&amp;color=0ea5e9" alt="Release"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/integration.yml"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/integration.yml?branch=main&amp;style=flat-square&amp;label=tests" alt="Tests"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/github-code-scanning/codeql"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/dynamic%2Fgithub-code-scanning%2Fcodeql?branch=main&amp;style=flat-square&amp;label=CodeQL" alt="CodeQL"></a>
-  <a href="https://hacs.xyz"><img src="https://img.shields.io/badge/HACS-custom-41BDF5?style=flat-square" alt="HACS custom repository"></a>
+  <a href="https://hacs.xyz"><img src="https://img.shields.io/badge/HACS-default-41BDF5?style=flat-square" alt="HACS default"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/wimmme/shellylanman-ha?style=flat-square&amp;color=161a3a" alt="Licence"></a>
   <a href="https://www.paypal.com/donate/?business=LPS62D2BRTD2Y&amp;no_recurring=0&amp;item_name=You+help+me+buying+coffee+and+tokens+for+coding+%3A-%29&amp;currency_code=EUR"><img src="https://img.shields.io/badge/donate-PayPal-0070BA?style=flat-square&amp;logo=paypal&amp;logoColor=white" alt="Donate with PayPal"></a>
 </p>
@@ -63,8 +63,7 @@ Needs ShellyLanMan **0.5.0** or newer (the app, or the Docker version) and HACS.
 
    [![Open the repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
 
-   (By hand: HACS → ⋮ → **Custom repositories** → `https://github.com/wimmme/shellylanman-ha`,
-   type **Integration**.)
+   (By hand: search for **ShellyLanMan** in HACS — it is in the HACS default list.)
 2. With the app, Home Assistant offers **ShellyLanMan** under *Settings → Devices &
    services → Discovered*: one click. Otherwise add it with ShellyLanMan's address
    (`http://<host>:3082`):
