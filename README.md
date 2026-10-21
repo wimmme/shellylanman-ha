@@ -7,6 +7,7 @@
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/github-code-scanning/codeql"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/dynamic%2Fgithub-code-scanning%2Fcodeql?branch=main&amp;style=flat-square&amp;label=CodeQL" alt="CodeQL"></a>
   <a href="https://hacs.xyz"><img src="https://img.shields.io/badge/HACS-default-41BDF5?style=flat-square" alt="HACS default"></a>
   <a href="https://www.home-assistant.io"><img src="https://img.shields.io/badge/Home%20Assistant-2026.9%2B-41BDF5?style=flat-square" alt="Home Assistant 2026.9+"></a>
+  <a href="QUALITY_SCALE.md"><img src="https://img.shields.io/badge/quality%20scale-silver%20(self--assessed)-C0C0C0?style=flat-square" alt="Quality scale: Silver (self-assessed)"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/pkgs/container/shellylanman-ha"><img src="https://img.shields.io/badge/docker-ghcr.io%2Fwimmme%2Fshellylanman--ha-2496ED?style=flat-square&amp;logo=docker&amp;logoColor=white" alt="Docker image"></a>
   <img src="https://img.shields.io/badge/platforms-amd64%20%7C%20arm64-6b7280?style=flat-square" alt="Platforms">
   <img src="https://img.shields.io/badge/Shelly-Gen1%20%7C%20Gen2%20%7C%20Gen3%20%7C%20Gen4%20%7C%20BLU-1e40af?style=flat-square" alt="Shelly generations">
