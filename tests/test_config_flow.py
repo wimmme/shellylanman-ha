@@ -109,3 +109,59 @@ async def test_app_with_password_uses_loopback(hass: HomeAssistant, aioclient_mo
     )
     assert result["type"] is FlowResultType.FORM, result  # ShellyLanMan answered through the loopback listener
     assert any(str(c[1]).startswith(f"{loopback}/api/v1/about") for c in aioclient_mock.mock_calls)
+
+
+async def test_user_flow_already_configured(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    """The same ShellyLanMan twice: refused, and the entry takes the new address."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=INSTANCE, data={CONF_URL: "http://192.0.2.99:3082"})
+    entry.add_to_hass(hass)
+    mock_shellylanman(aioclient_mock)
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL})
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "already_configured"
+    assert entry.data[CONF_URL] == URL
+
+
+async def test_hassio_discovery_cannot_connect(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    local = "http://127.0.0.1:3082"
+    aioclient_mock.get(f"{local}/api/v1/about", status=500)
+    info = HassioServiceInfo(config={"url": local}, name="ShellyLanMan", slug="x_shellylanman", uuid="u1")
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_HASSIO}, data=info)
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "cannot_connect"
+
+
+async def test_reconfigure(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    """Reconfigure: an error is shown and can be corrected; the token is added; the URL may change."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=INSTANCE, data={CONF_URL: "http://192.0.2.99:3082"})
+    entry.add_to_hass(hass)
+    result = await entry.start_reconfigure_flow(hass)
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "reconfigure"
+
+    aioclient_mock.get(f"{URL}/api/v1/about", status=500)
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL})
+    assert result["errors"] == {"base": "cannot_connect"}
+
+    aioclient_mock.clear_requests()
+    mock_shellylanman(aioclient_mock)
+    aioclient_mock.post(f"{URL}/mcp", json={"jsonrpc": "2.0", "id": 1, "result": TOOLS})
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL + "/", CONF_MCP_TOKEN: "tok"})
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "reconfigure_successful"
+    assert entry.data == {CONF_URL: URL, CONF_MCP_TOKEN: "tok"}
+    await hass.async_block_till_done()  # the reload set the entry up: stop its polling
+    assert await hass.config_entries.async_unload(entry.entry_id)
+
+
+async def test_reconfigure_other_instance(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker) -> None:
+    """An address that is another ShellyLanMan is refused; the entry stays as it was."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=INSTANCE, data={CONF_URL: "http://192.0.2.99:3082"})
+    entry.add_to_hass(hass)
+    mock_shellylanman(aioclient_mock, instance="another")
+    result = await entry.start_reconfigure_flow(hass)
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_URL: URL})
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "wrong_instance"
+    assert entry.data == {CONF_URL: "http://192.0.2.99:3082"}

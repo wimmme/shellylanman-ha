@@ -125,6 +125,21 @@ the "protected" hint; older versions still add Shellys without a password.
 Either way the MCP server must be enabled in ShellyLanMan, and its access level
 (read / control / configure) decides what Assist may do.
 
+### Remove the integration
+
+1. *Settings → Devices & services → ShellyLanMan* → ⋮ → **Delete**. Its devices and
+   entities go with it; the Shellys in Home Assistant's Shelly integration stay, and
+   so do ShellyLanMan and its backups.
+2. To remove the files too: in the Marketplace (or HACS) open **ShellyLanMan** → ⋮ →
+   **Remove**, then restart Home Assistant.
+
+The app is removed separately, under *Settings → Apps*. Home Assistant's *Model Context
+Protocol* integration, if you added it for Assist, is its own entry.
+
+How the integration measures up to Home Assistant's
+[integration quality scale](https://contributors.home-assistant.io/core/quality-scale/):
+[`QUALITY_SCALE.md`](QUALITY_SCALE.md).
+
 ## Licence
 
 GPL-3.0-or-later, as ShellyLanMan and ShellyScanner. See [`LICENSE`](LICENSE).

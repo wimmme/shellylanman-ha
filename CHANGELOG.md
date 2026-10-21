@@ -5,6 +5,7 @@ The app has its own changelog in `shellylanman/CHANGELOG.md`.
 ## Unreleased
 
 - The integration is in the HACS default list (2026-10-21): search for ShellyLanMan in HACS, no custom repository needed (README).
+- Quality scale: a self-assessment against Home Assistant's integration quality scale (`QUALITY_SCALE.md`); the Bronze rules are met. For that: field descriptions in the set-up and reconfigure forms, tests for the whole config flow (already configured, discovery failing, reconfigure), and removal instructions in the README.
 - README: more badges (app build, Home Assistant 2026.9+, Docker image, platforms, Shelly generations, languages), like ShellyLanMan's.
 - README: from Home Assistant 2026.11 the integration is found in the Marketplace (*Settings → Marketplace*), which replaces HACS.
 
