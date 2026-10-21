@@ -1,0 +1,174 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ShellyLanMan",
+        "description": "Адресът на ShellyLanMan, напр. http://192.168.1.10:3082. MCP токенът (ShellyLanMan → Настройки → MCP) е нужен само за да получи Assist инструментите на ShellyLanMan.",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP токен"
+        },
+        "data_description": {
+          "url": "Уеб адресът на ShellyLanMan, с http:// и порта, напр. http://192.168.1.10:3082.",
+          "mcp_token": "По избор. ShellyLanMan → Настройки → MCP. Нужен е за Assist, когато ShellyLanMan има парола, и за да се предават паролите на Shelly устройствата към Home Assistant."
+        }
+      },
+      "hassio_confirm": {
+        "title": "ShellyLanMan",
+        "description": "Да се добави ли ShellyLanMan, който работи като приложение на Home Assistant ({url})?"
+      },
+      "reauth_confirm": {
+        "title": "ShellyLanMan: MCP токен",
+        "description": "ShellyLanMan на {url} отказа MCP токена или вече има парола и изисква токен. Въведете MCP токена от ShellyLanMan → Настройки → MCP.",
+        "data": {
+          "mcp_token": "MCP токен"
+        },
+        "data_description": {
+          "mcp_token": "ShellyLanMan → Настройки → MCP."
+        }
+      },
+      "reconfigure": {
+        "title": "ShellyLanMan",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP токен"
+        },
+        "data_description": {
+          "url": "Уеб адресът на ShellyLanMan, с http:// и порта, напр. http://192.168.1.10:3082.",
+          "mcp_token": "По избор. ShellyLanMan → Настройки → MCP. Нужен е за Assist, когато ShellyLanMan има парола, и за да се предават паролите на Shelly устройствата към Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "ShellyLanMan не е достъпен на този адрес.",
+      "invalid_token": "MCP токенът беше отказан.",
+      "too_old": "Този ShellyLanMan е твърде стар: нужна е версия 0.5.0 или по-нова.",
+      "unknown": "Неочаквана грешка.",
+      "login_required": "ShellyLanMan е защитен с парола: въведете неговия MCP токен (ShellyLanMan → Настройки → MCP)."
+    },
+    "abort": {
+      "already_configured": "Този ShellyLanMan вече е настроен.",
+      "cannot_connect": "ShellyLanMan не е достъпен.",
+      "too_old": "Този ShellyLanMan е твърде стар: нужна е версия 0.5.0 или по-нова.",
+      "reconfigure_successful": "Запазено.",
+      "wrong_instance": "Този адрес е на друг ShellyLanMan.",
+      "login_required": "ShellyLanMan е защитен с парола: интеграцията се нуждае от неговия MCP токен (ShellyLanMan → Настройки → MCP).",
+      "reauth_successful": "Новият MCP токен е запазен."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Състояние в ShellyLanMan",
+        "state": {
+          "online": "Онлайн",
+          "offline": "Офлайн",
+          "login": "Нужна е парола",
+          "reading": "Четене",
+          "error": "Грешка",
+          "ghost": "Не е намерен (архив)",
+          "searching": "Търсене"
+        }
+      },
+      "last_backup": {
+        "name": "Последно архивиране на конфигурацията"
+      },
+      "devices_online": {
+        "name": "Устройства онлайн"
+      },
+      "devices_offline": {
+        "name": "Устройства офлайн"
+      },
+      "devices_attention": {
+        "name": "Устройства, изискващи внимание"
+      },
+      "version": {
+        "name": "Версия"
+      }
+    },
+    "binary_sensor": {
+      "eco_mode": {
+        "name": "Еко режим"
+      },
+      "led_off": {
+        "name": "LED изкл."
+      },
+      "debug_log": {
+        "name": "Дневник за отстраняване на грешки"
+      },
+      "bluetooth": {
+        "name": "Bluetooth"
+      },
+      "access_point": {
+        "name": "Точка за достъп"
+      },
+      "roaming": {
+        "name": "Wi-Fi роуминг"
+      },
+      "static_ip": {
+        "name": "Статичен IP"
+      },
+      "range_extender": {
+        "name": "Удължител на обхвата"
+      },
+      "auto_firmware_update": {
+        "name": "Автоматична актуализация на фърмуера"
+      }
+    },
+    "button": {
+      "backup": {
+        "name": "Архивиране на конфигурацията"
+      },
+      "rescan": {
+        "name": "Сканиране на мрежата отново"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "add": {
+        "title": "Добавяне на Shelly устройства в Home Assistant",
+        "description": "ShellyLanMan познава {count} Shelly устройства, които не са в Shelly интеграцията на Home Assistant: {discovered} вече открити от Home Assistant, {missed}, които Home Assistant не е предложил. Отметнете тези, които да се добавят; те се добавят чрез Shelly интеграцията, все едно сте ги добавили там. Shelly с парола получава паролата, която пази ShellyLanMan (когато ShellyLanMan може да я предаде). Не отговарят в момента: {offline}.",
+        "data": {
+          "devices": "Shelly устройства"
+        }
+      },
+      "result": {
+        "title": "Добавени Shelly устройства",
+        "description": "{added} от {total} добавени в Shelly интеграцията.\n\n{details}"
+      }
+    },
+    "abort": {
+      "nothing_to_add": "Всяко Shelly устройство, което ShellyLanMan познава, е в Shelly интеграцията на Home Assistant (или е игнорирано там).",
+      "not_loaded": "ShellyLanMan не е зареден; опитайте отново, когато бъде."
+    }
+  },
+  "issues": {
+    "shellys_missing": {
+      "title": "{count} Shelly устройства не са в Home Assistant",
+      "fix_flow": {
+        "step": {
+          "init": {
+            "title": "{count} Shelly устройства не са в Home Assistant",
+            "description": "ShellyLanMan познава {count} Shelly устройства, които не са в Shelly интеграцията на Home Assistant. Изпратете, за да изберете кои да се добавят."
+          },
+          "add": {
+            "title": "Добавяне на Shelly устройства в Home Assistant",
+            "description": "ShellyLanMan познава {count} Shelly устройства, които не са в Shelly интеграцията на Home Assistant: {discovered} вече открити от Home Assistant, {missed}, които Home Assistant не е предложил. Отметнете тези, които да се добавят; те се добавят чрез Shelly интеграцията, все едно сте ги добавили там. Shelly с парола получава паролата, която пази ShellyLanMan (когато ShellyLanMan може да я предаде). Не отговарят в момента: {offline}.",
+            "data": {
+              "devices": "Shelly устройства"
+            }
+          },
+          "result": {
+            "title": "Добавени Shelly устройства",
+            "description": "{added} от {total} добавени в Shelly интеграцията.\n\n{details}"
+          }
+        },
+        "abort": {
+          "nothing_to_add": "Всяко Shelly устройство, което ShellyLanMan познава, е в Shelly интеграцията на Home Assistant (или е игнорирано там).",
+          "not_loaded": "ShellyLanMan не е зареден; опитайте отново, когато бъде."
+        }
+      }
+    }
+  }
+}

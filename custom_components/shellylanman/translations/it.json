@@ -1,0 +1,174 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ShellyLanMan",
+        "description": "L'indirizzo di ShellyLanMan, ad es. http://192.168.1.10:3082. Il token MCP (ShellyLanMan → Impostazioni → MCP) serve solo per dare ad Assist gli strumenti di ShellyLanMan.",
+        "data": {
+          "url": "URL",
+          "mcp_token": "Token MCP"
+        },
+        "data_description": {
+          "url": "L'indirizzo web di ShellyLanMan, con http:// e la porta, ad es. http://192.168.1.10:3082.",
+          "mcp_token": "Facoltativo. ShellyLanMan → Impostazioni → MCP. Serve per Assist, quando ShellyLanMan ha una password e per passare le password degli Shelly a Home Assistant."
+        }
+      },
+      "hassio_confirm": {
+        "title": "ShellyLanMan",
+        "description": "Aggiungere ShellyLanMan, in esecuzione come app di Home Assistant ({url})?"
+      },
+      "reauth_confirm": {
+        "title": "ShellyLanMan: token MCP",
+        "description": "ShellyLanMan su {url} ha rifiutato il token MCP, oppure ora ha una password e ne richiede uno. Inserisci il token MCP da ShellyLanMan → Impostazioni → MCP.",
+        "data": {
+          "mcp_token": "Token MCP"
+        },
+        "data_description": {
+          "mcp_token": "ShellyLanMan → Impostazioni → MCP."
+        }
+      },
+      "reconfigure": {
+        "title": "ShellyLanMan",
+        "data": {
+          "url": "URL",
+          "mcp_token": "Token MCP"
+        },
+        "data_description": {
+          "url": "L'indirizzo web di ShellyLanMan, con http:// e la porta, ad es. http://192.168.1.10:3082.",
+          "mcp_token": "Facoltativo. ShellyLanMan → Impostazioni → MCP. Serve per Assist, quando ShellyLanMan ha una password e per passare le password degli Shelly a Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile raggiungere ShellyLanMan a questo indirizzo.",
+      "invalid_token": "Il token MCP è stato rifiutato.",
+      "too_old": "Questo ShellyLanMan è troppo vecchio: serve la versione 0.5.0 o successiva.",
+      "unknown": "Errore imprevisto.",
+      "login_required": "ShellyLanMan è protetto da password: inserisci il suo token MCP (ShellyLanMan → Impostazioni → MCP)."
+    },
+    "abort": {
+      "already_configured": "Questo ShellyLanMan è già configurato.",
+      "cannot_connect": "Impossibile raggiungere ShellyLanMan.",
+      "too_old": "Questo ShellyLanMan è troppo vecchio: serve la versione 0.5.0 o successiva.",
+      "reconfigure_successful": "Salvato.",
+      "wrong_instance": "Quell'indirizzo è di un altro ShellyLanMan.",
+      "login_required": "ShellyLanMan è protetto da password: l'integrazione ha bisogno del suo token MCP (ShellyLanMan → Impostazioni → MCP).",
+      "reauth_successful": "Il nuovo token MCP è stato salvato."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Stato ShellyLanMan",
+        "state": {
+          "online": "Online",
+          "offline": "Offline",
+          "login": "Password necessaria",
+          "reading": "Lettura",
+          "error": "Errore",
+          "ghost": "Non trovato (archivio)",
+          "searching": "Ricerca"
+        }
+      },
+      "last_backup": {
+        "name": "Ultimo backup della configurazione"
+      },
+      "devices_online": {
+        "name": "Dispositivi online"
+      },
+      "devices_offline": {
+        "name": "Dispositivi offline"
+      },
+      "devices_attention": {
+        "name": "Dispositivi da controllare"
+      },
+      "version": {
+        "name": "Versione"
+      }
+    },
+    "binary_sensor": {
+      "eco_mode": {
+        "name": "Modalità eco"
+      },
+      "led_off": {
+        "name": "LED spento"
+      },
+      "debug_log": {
+        "name": "Log di debug"
+      },
+      "bluetooth": {
+        "name": "Bluetooth"
+      },
+      "access_point": {
+        "name": "Punto di accesso"
+      },
+      "roaming": {
+        "name": "Roaming Wi-Fi"
+      },
+      "static_ip": {
+        "name": "IP statico"
+      },
+      "range_extender": {
+        "name": "Range extender"
+      },
+      "auto_firmware_update": {
+        "name": "Aggiornamento automatico del firmware"
+      }
+    },
+    "button": {
+      "backup": {
+        "name": "Esegui backup della configurazione"
+      },
+      "rescan": {
+        "name": "Scansiona di nuovo la rete"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "add": {
+        "title": "Aggiungi Shelly a Home Assistant",
+        "description": "ShellyLanMan conosce {count} Shelly che non sono nell'integrazione Shelly di Home Assistant: {discovered} già rilevati da Home Assistant, {missed} che Home Assistant non ha proposto. Spunta quelli da aggiungere; vengono aggiunti tramite l'integrazione Shelly, come se li aggiungessi lì. Uno Shelly con password riceve quella salvata in ShellyLanMan (se ShellyLanMan può fornirla). Non rispondono ora: {offline}.",
+        "data": {
+          "devices": "Shelly"
+        }
+      },
+      "result": {
+        "title": "Shelly aggiunti",
+        "description": "{added} su {total} aggiunti all'integrazione Shelly.\n\n{details}"
+      }
+    },
+    "abort": {
+      "nothing_to_add": "Ogni Shelly noto a ShellyLanMan è nell'integrazione Shelly di Home Assistant (o vi è ignorato).",
+      "not_loaded": "ShellyLanMan non è caricato; riprova quando lo sarà."
+    }
+  },
+  "issues": {
+    "shellys_missing": {
+      "title": "{count} Shelly non sono in Home Assistant",
+      "fix_flow": {
+        "step": {
+          "init": {
+            "title": "{count} Shelly non sono in Home Assistant",
+            "description": "ShellyLanMan conosce {count} Shelly che non sono nell'integrazione Shelly di Home Assistant. Invia per scegliere quali aggiungere."
+          },
+          "add": {
+            "title": "Aggiungi Shelly a Home Assistant",
+            "description": "ShellyLanMan conosce {count} Shelly che non sono nell'integrazione Shelly di Home Assistant: {discovered} già rilevati da Home Assistant, {missed} che Home Assistant non ha proposto. Spunta quelli da aggiungere; vengono aggiunti tramite l'integrazione Shelly, come se li aggiungessi lì. Uno Shelly con password riceve quella salvata in ShellyLanMan (se ShellyLanMan può fornirla). Non rispondono ora: {offline}.",
+            "data": {
+              "devices": "Shelly"
+            }
+          },
+          "result": {
+            "title": "Shelly aggiunti",
+            "description": "{added} su {total} aggiunti all'integrazione Shelly.\n\n{details}"
+          }
+        },
+        "abort": {
+          "nothing_to_add": "Ogni Shelly noto a ShellyLanMan è nell'integrazione Shelly di Home Assistant (o vi è ignorato).",
+          "not_loaded": "ShellyLanMan non è caricato; riprova quando lo sarà."
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@
   <a href="https://github.com/wimmme/shellylanman-ha/pkgs/container/shellylanman-ha"><img src="https://img.shields.io/badge/docker-ghcr.io%2Fwimmme%2Fshellylanman--ha-2496ED?style=flat-square&amp;logo=docker&amp;logoColor=white" alt="Docker image"></a>
   <img src="https://img.shields.io/badge/platforms-amd64%20%7C%20arm64-6b7280?style=flat-square" alt="Platforms">
   <img src="https://img.shields.io/badge/Shelly-Gen1%20%7C%20Gen2%20%7C%20Gen3%20%7C%20Gen4%20%7C%20BLU-1e40af?style=flat-square" alt="Shelly generations">
-  <img src="https://img.shields.io/badge/languages-app%208%20%7C%20integration%202-0f766e?style=flat-square" alt="Languages">
+  <img src="https://img.shields.io/badge/languages-8-0f766e?style=flat-square" alt="Languages">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/wimmme/shellylanman-ha?style=flat-square&amp;color=161a3a" alt="Licence"></a>
   <a href="https://www.paypal.com/donate/?business=LPS62D2BRTD2Y&amp;no_recurring=0&amp;item_name=You+help+me+buying+coffee+and+tokens+for+coding+%3A-%29&amp;currency_code=EUR"><img src="https://img.shields.io/badge/donate-PayPal-0070BA?style=flat-square&amp;logo=paypal&amp;logoColor=white" alt="Donate with PayPal"></a>
 </p>

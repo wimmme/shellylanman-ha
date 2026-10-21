@@ -1,0 +1,174 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ShellyLanMan",
+        "description": "ShellyLanMan 的地址，例如 http://192.168.1.10:3082。只有要让 Assist 使用 ShellyLanMan 的工具时，才需要 MCP 令牌（ShellyLanMan → 设置 → MCP）。",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP 令牌"
+        },
+        "data_description": {
+          "url": "ShellyLanMan 的网址，包含 http:// 和端口，例如 http://192.168.1.10:3082。",
+          "mcp_token": "可选。ShellyLanMan → 设置 → MCP。用于 Assist、ShellyLanMan 设有密码时，以及把 Shelly 的密码交给 Home Assistant。"
+        }
+      },
+      "hassio_confirm": {
+        "title": "ShellyLanMan",
+        "description": "添加作为 Home Assistant 应用运行的 ShellyLanMan（{url}）？"
+      },
+      "reauth_confirm": {
+        "title": "ShellyLanMan：MCP 令牌",
+        "description": "位于 {url} 的 ShellyLanMan 拒绝了 MCP 令牌，或现在设有密码而需要令牌。请输入 ShellyLanMan → 设置 → MCP 中的 MCP 令牌。",
+        "data": {
+          "mcp_token": "MCP 令牌"
+        },
+        "data_description": {
+          "mcp_token": "ShellyLanMan → 设置 → MCP。"
+        }
+      },
+      "reconfigure": {
+        "title": "ShellyLanMan",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP 令牌"
+        },
+        "data_description": {
+          "url": "ShellyLanMan 的网址，包含 http:// 和端口，例如 http://192.168.1.10:3082。",
+          "mcp_token": "可选。ShellyLanMan → 设置 → MCP。用于 Assist、ShellyLanMan 设有密码时，以及把 Shelly 的密码交给 Home Assistant。"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法通过此地址连接 ShellyLanMan。",
+      "invalid_token": "MCP 令牌被拒绝。",
+      "too_old": "此 ShellyLanMan 版本太旧：需要 0.5.0 或更高版本。",
+      "unknown": "意外错误。",
+      "login_required": "ShellyLanMan 受密码保护：请输入它的 MCP 令牌（ShellyLanMan → 设置 → MCP）。"
+    },
+    "abort": {
+      "already_configured": "此 ShellyLanMan 已设置。",
+      "cannot_connect": "无法连接 ShellyLanMan。",
+      "too_old": "此 ShellyLanMan 版本太旧：需要 0.5.0 或更高版本。",
+      "reconfigure_successful": "已保存。",
+      "wrong_instance": "该地址是另一个 ShellyLanMan。",
+      "login_required": "ShellyLanMan 受密码保护：集成需要它的 MCP 令牌（ShellyLanMan → 设置 → MCP）。",
+      "reauth_successful": "新的 MCP 令牌已保存。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "ShellyLanMan 状态",
+        "state": {
+          "online": "在线",
+          "offline": "离线",
+          "login": "需要密码",
+          "reading": "读取中",
+          "error": "错误",
+          "ghost": "未找到（归档）",
+          "searching": "搜索中"
+        }
+      },
+      "last_backup": {
+        "name": "上次配置备份"
+      },
+      "devices_online": {
+        "name": "在线设备"
+      },
+      "devices_offline": {
+        "name": "离线设备"
+      },
+      "devices_attention": {
+        "name": "需要关注的设备"
+      },
+      "version": {
+        "name": "版本"
+      }
+    },
+    "binary_sensor": {
+      "eco_mode": {
+        "name": "节能模式"
+      },
+      "led_off": {
+        "name": "LED 关"
+      },
+      "debug_log": {
+        "name": "调试日志"
+      },
+      "bluetooth": {
+        "name": "Bluetooth"
+      },
+      "access_point": {
+        "name": "接入点"
+      },
+      "roaming": {
+        "name": "Wi-Fi 漫游"
+      },
+      "static_ip": {
+        "name": "静态 IP"
+      },
+      "range_extender": {
+        "name": "范围扩展器"
+      },
+      "auto_firmware_update": {
+        "name": "自动固件更新"
+      }
+    },
+    "button": {
+      "backup": {
+        "name": "备份配置"
+      },
+      "rescan": {
+        "name": "重新扫描网络"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "add": {
+        "title": "将 Shelly 添加到 Home Assistant",
+        "description": "ShellyLanMan 知道 {count} 台不在 Home Assistant 的 Shelly 集成中的 Shelly：{discovered} 台已被 Home Assistant 发现，{missed} 台 Home Assistant 未提供。勾选要添加的设备；它们会通过 Shelly 集成添加，就像你在那里添加一样。设有密码的 Shelly 会使用 ShellyLanMan 保存的密码（在 ShellyLanMan 允许提供时）。当前无响应：{offline}。",
+        "data": {
+          "devices": "Shelly 设备"
+        }
+      },
+      "result": {
+        "title": "已添加的 Shelly",
+        "description": "已将 {total} 台中的 {added} 台添加到 Shelly 集成。\n\n{details}"
+      }
+    },
+    "abort": {
+      "nothing_to_add": "ShellyLanMan 知道的每台 Shelly 都已在 Home Assistant 的 Shelly 集成中（或在那里被忽略）。",
+      "not_loaded": "ShellyLanMan 尚未加载；加载后请重试。"
+    }
+  },
+  "issues": {
+    "shellys_missing": {
+      "title": "{count} 台 Shelly 不在 Home Assistant 中",
+      "fix_flow": {
+        "step": {
+          "init": {
+            "title": "{count} 台 Shelly 不在 Home Assistant 中",
+            "description": "ShellyLanMan 知道 {count} 台不在 Home Assistant 的 Shelly 集成中的 Shelly。提交以选择要添加的设备。"
+          },
+          "add": {
+            "title": "将 Shelly 添加到 Home Assistant",
+            "description": "ShellyLanMan 知道 {count} 台不在 Home Assistant 的 Shelly 集成中的 Shelly：{discovered} 台已被 Home Assistant 发现，{missed} 台 Home Assistant 未提供。勾选要添加的设备；它们会通过 Shelly 集成添加，就像你在那里添加一样。设有密码的 Shelly 会使用 ShellyLanMan 保存的密码（在 ShellyLanMan 允许提供时）。当前无响应：{offline}。",
+            "data": {
+              "devices": "Shelly 设备"
+            }
+          },
+          "result": {
+            "title": "已添加的 Shelly",
+            "description": "已将 {total} 台中的 {added} 台添加到 Shelly 集成。\n\n{details}"
+          }
+        },
+        "abort": {
+          "nothing_to_add": "ShellyLanMan 知道的每台 Shelly 都已在 Home Assistant 的 Shelly 集成中（或在那里被忽略）。",
+          "not_loaded": "ShellyLanMan 尚未加载；加载后请重试。"
+        }
+      }
+    }
+  }
+}
