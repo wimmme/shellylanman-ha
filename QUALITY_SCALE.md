@@ -5,7 +5,7 @@ grades core integrations: Bronze, Silver, Gold, Platinum. It is awarded to core
 integrations in review; a custom integration cannot claim a tier. This is a
 self-assessment of `custom_components/shellylanman` against the
 [rules](https://contributors.home-assistant.io/core/quality-scale/rules/), so you know
-what to expect and what is still open. Last checked: 2026-10-22, version 0.9.10 + main.
+what to expect and what is still open. Last checked: 2026-10-22, version 0.9.11.
 
 **done** — the rule is met · **exempt** — the rule does not apply, with the reason ·
 **todo** — not met yet. The plan for the open rules is in [`ROADMAP.md`](ROADMAP.md).

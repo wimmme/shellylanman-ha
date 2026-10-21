@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.11
+
+Runs ShellyLanMan 0.9.11 (no changes to ShellyLanMan itself).
+
+- The integration is in HACS's default list: search for *ShellyLanMan* in HACS, or from Home Assistant 2026.11 in
+  the Marketplace.
+- The integration asks for a new MCP token when ShellyLanMan refuses it, and speaks ShellyLanMan's 8 languages.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.10
 
 Runs ShellyLanMan 0.9.10.

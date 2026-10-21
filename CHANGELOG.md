@@ -2,18 +2,17 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
-## Unreleased
+## 0.9.11
 
-- The integration is in the HACS default list (2026-10-21): search for ShellyLanMan in HACS, no custom repository needed (README).
-- README badge: quality scale Silver (self-assessed, links to `QUALITY_SCALE.md`).
-- `ROADMAP.md`: what comes next, including quality scale Gold and Platinum.
-- **The integration in 8 languages**, like ShellyLanMan: German, French, Spanish, Italian, Bulgarian and Chinese (simplified) next to English and Dutch, including the *Add Shellys* dialog. A test keeps the keys and placeholders equal.
-- **Asks for a new MCP token** (reauthentication) when ShellyLanMan refuses the token, or when ShellyLanMan got a UI password after the integration was set up. Before, the integration stopped working or Assist failed, and you had to use *Reconfigure*.
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
+
+- **In HACS's default list** (since 2026-10-21): search for ShellyLanMan in HACS, no custom repository needed. From Home Assistant 2026.11 you find it in the Marketplace (*Settings → Marketplace*), which replaces HACS.
+- **Asks for a new MCP token** when ShellyLanMan refuses the token, or when ShellyLanMan got a UI password after the integration was set up. Before, the integration kept retrying or Assist failed, and you had to use *Reconfigure*.
+- **In ShellyLanMan's 8 languages**: German, French, Spanish, Italian, Bulgarian and Chinese (simplified) next to English and Dutch, the *Add Shellys* dialog included.
+- The set-up and reconfigure forms explain each field.
 - One backup at a time when several *Back up configuration* buttons are pressed together.
-- Quality scale: Silver met. Tests for the error paths: 99 % coverage.
-- Quality scale: a self-assessment against Home Assistant's integration quality scale (`QUALITY_SCALE.md`); the Bronze rules are met. For that: field descriptions in the set-up and reconfigure forms, tests for the whole config flow (already configured, discovery failing, reconfigure), and removal instructions in the README.
-- README: more badges (app build, Home Assistant 2026.9+, Docker image, platforms, Shelly generations, languages), like ShellyLanMan's.
-- README: from Home Assistant 2026.11 the integration is found in the Marketplace (*Settings → Marketplace*), which replaces HACS.
+- Home Assistant's integration quality scale: Bronze and Silver met, self-assessed in `QUALITY_SCALE.md`; what comes next in `ROADMAP.md`. Tests now cover 99 % of the code.
+- README: removal instructions, more badges.
 
 ## 0.9.10
 
