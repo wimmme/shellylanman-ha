@@ -1,10 +1,6 @@
 {
   "domain": "shellylanman",
   "name": "ShellyLanMan",
-  "categories": [
-    "plugs_switches",
-    "computers_network.monitoring"
-  ],
   "codeowners": [
     "@wimmme"
   ],
