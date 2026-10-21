@@ -8,7 +8,7 @@ self-assessment of `custom_components/shellylanman` against the
 what to expect and what is still open. Last checked: 2026-10-22, version 0.9.10 + main.
 
 **done** — the rule is met · **exempt** — the rule does not apply, with the reason ·
-**todo** — not met yet.
+**todo** — not met yet. The plan for the open rules is in [`ROADMAP.md`](ROADMAP.md).
 
 ## Bronze — met
 

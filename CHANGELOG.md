@@ -5,6 +5,7 @@ The app has its own changelog in `shellylanman/CHANGELOG.md`.
 ## Unreleased
 
 - The integration is in the HACS default list (2026-10-21): search for ShellyLanMan in HACS, no custom repository needed (README).
+- `ROADMAP.md`: what comes next, including quality scale Gold and Platinum.
 - **The integration in 8 languages**, like ShellyLanMan: German, French, Spanish, Italian, Bulgarian and Chinese (simplified) next to English and Dutch, including the *Add Shellys* dialog. A test keeps the keys and placeholders equal.
 - **Asks for a new MCP token** (reauthentication) when ShellyLanMan refuses the token, or when ShellyLanMan got a UI password after the integration was set up. Before, the integration stopped working or Assist failed, and you had to use *Reconfigure*.
 - One backup at a time when several *Back up configuration* buttons are pressed together.

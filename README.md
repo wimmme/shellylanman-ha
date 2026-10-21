@@ -138,7 +138,7 @@ Protocol* integration, if you added it for Assist, is its own entry.
 
 How the integration measures up to Home Assistant's
 [integration quality scale](https://contributors.home-assistant.io/core/quality-scale/):
-[`QUALITY_SCALE.md`](QUALITY_SCALE.md).
+[`QUALITY_SCALE.md`](QUALITY_SCALE.md). What comes next: [`ROADMAP.md`](ROADMAP.md).
 
 ## Licence
 
