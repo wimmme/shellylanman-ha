@@ -1,7 +1,8 @@
 # ShellyLanMan for Home Assistant
 
 <p>
-  <a href="https://github.com/wimmme/shellylanman-ha/releases"><img src="https://img.shields.io/github/v/release/wimmme/shellylanman-ha?style=flat-square&amp;color=0ea5e9" alt="Release"></a>
+  <a href="https://github.com/wimmme/shellylanman-ha/releases"><img src="https://img.shields.io/github/v/release/wimmme/shellylanman-ha?style=flat-square&amp;color=0ea5e9&amp;label=integration" alt="Integration release"></a>
+  <a href="shellylanman/CHANGELOG.md"><img src="https://img.shields.io/github/v/tag/wimmme/shellylanman-ha?filter=app-v*&amp;style=flat-square&amp;color=0ea5e9&amp;label=app" alt="App version"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/integration.yml"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/integration.yml?branch=main&amp;style=flat-square&amp;label=tests" alt="Tests"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/app.yml"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/app.yml?branch=main&amp;style=flat-square&amp;label=app" alt="App"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/github-code-scanning/codeql"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/dynamic%2Fgithub-code-scanning%2Fcodeql?branch=main&amp;style=flat-square&amp;label=CodeQL" alt="CodeQL"></a>

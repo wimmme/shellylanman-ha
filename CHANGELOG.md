@@ -1,6 +1,7 @@
 # Changelog of the integration
 
-The app has its own changelog in `shellylanman/CHANGELOG.md`.
+The app has its own changelog in `shellylanman/CHANGELOG.md`. Up to 0.9.12 the app and the integration had the
+same version; since then the integration gets a new version only when it changes.
 
 ## 0.9.12
 

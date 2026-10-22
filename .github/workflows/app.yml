@@ -1,11 +1,12 @@
 name: App
 
 # Every push: check the versions and build the app image (not pushed).
-# A vX.Y.Z tag: the same, then push ghcr.io/wimmme/shellylanman-ha:X.Y.Z.
+# An app-vX.Y.Z tag: the same, then push ghcr.io/wimmme/shellylanman-ha:X.Y.Z. The app has no
+# GitHub release: those are the integration's (HACS reads them as integration updates).
 on:
   push:
     branches: [main]
-    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+    tags: ['app-v[0-9]+.[0-9]+.[0-9]+*']
   pull_request:
   workflow_dispatch:
 
@@ -28,7 +29,7 @@ jobs:
           echo "app $app, ShellyLanMan $base"
           # App-only fixes add "-N" to the ShellyLanMan version (COMPATIBILITY.md).
           case "$app" in "$base"|"$base"-*) ;; *) echo "config.yaml version $app does not match ShellyLanMan $base"; exit 1 ;; esac
-          if [ "${GITHUB_REF_TYPE}" = tag ] && [ "${GITHUB_REF_NAME}" != "v$app" ]; then
+          if [ "${GITHUB_REF_TYPE}" = tag ] && [ "${GITHUB_REF_NAME}" != "app-v$app" ]; then
             echo "tag ${GITHUB_REF_NAME} does not match config.yaml version $app"; exit 1
           fi
           echo "app=$app" >> "$GITHUB_OUTPUT"

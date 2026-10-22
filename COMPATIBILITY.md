@@ -5,7 +5,7 @@ Two repositories, one product:
 | Repository | Holds | Language | Releases |
 |---|---|---|---|
 | [`wimmme/shellylanman`](https://github.com/wimmme/shellylanman) | The application: server, web UI, REST API, WebSocket, MCP server | Go, TypeScript | `vX.Y.Z` tags → `ghcr.io/wimmme/shellylanman:X.Y.Z` (amd64, arm64) |
-| `wimmme/shellylanman-ha` (this one) | Home Assistant packaging: the app, later the integration | YAML, shell; Python for the integration | `vX.Y.Z` tags → `ghcr.io/wimmme/shellylanman-ha:X.Y.Z` (amd64, aarch64) |
+| `wimmme/shellylanman-ha` (this one) | Home Assistant: the app and the integration | YAML, shell; Python for the integration | App: `app-vX.Y.Z` tags → `ghcr.io/wimmme/shellylanman-ha:X.Y.Z` (amd64, aarch64), no GitHub release. Integration: `vX.Y.Z` tags → GitHub release, offered by HACS |
 
 ## The app
 
@@ -23,11 +23,16 @@ Two repositories, one product:
     reporting `"ingress": true` for requests through ingress.
 - **Releasing:** release ShellyLanMan first (its tag publishes the base image), then bump
   `version` in `shellylanman/config.yaml` and `SHELLYLANMAN_VERSION` in
-  `shellylanman/Dockerfile`, add the changelog entry and tag this repository with the
-  same version. The workflow builds and pushes the app image; Home Assistant offers the
-  update once `config.yaml` on `main` has the new version.
+  `shellylanman/Dockerfile`, add the changelog entry and tag this repository
+  `app-vX.Y.Z`. The workflow builds and pushes the app image; Home Assistant offers the
+  update once `config.yaml` on `main` has the new version. The app gets no GitHub
+  release: HACS would offer it as an integration update.
 
 ## The integration
+
+**Its own version** (since 0.9.13 of the app): raised only when the integration changes,
+tagged `vX.Y.Z`, with a GitHub release that HACS offers. Its changelog says which
+ShellyLanMan it needs.
 
 **Needs ShellyLanMan 0.5.0 or newer** (`instanceId` in `/api/v1/about`). Home Assistant
 2026.9 or newer (`hacs.json`); tested against 2026.9.4 and the newest release.
