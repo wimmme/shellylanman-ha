@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.13
+
+Runs ShellyLanMan 0.9.13.
+
+- The app and the integration now have their own versions: Home Assistant shows an integration update only when
+  the integration changed, no longer with every app update.
+- ShellyLanMan's release check (opt-in) follows the app's versions and links to this changelog.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.12
 
 Runs ShellyLanMan 0.9.12.
