@@ -2,6 +2,12 @@
 
 The app has its own changelog in `shellylanman/CHANGELOG.md`.
 
+## 0.9.12
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
+
+- No changes to the integration; same version as the app (ShellyLanMan 0.9.12). README: MCP is on by default.
+
 ## 0.9.11
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.

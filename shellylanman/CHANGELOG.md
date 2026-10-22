@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.12
+
+Runs ShellyLanMan 0.9.12.
+
+- Home Assistant offers *Model Context Protocol* (Assist with ShellyLanMan's tools) only while ShellyLanMan's MCP
+  server is on; before, adding it failed with "unexpected error" when MCP was off.
+- MCP is on by default in a new installation, read only.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.11
 
 Runs ShellyLanMan 0.9.11 (no changes to ShellyLanMan itself).
