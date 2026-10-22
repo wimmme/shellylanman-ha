@@ -123,8 +123,10 @@ the "protected" hint; older versions still add Shellys without a password.
   integration (*Reconfigure*); it adds an LLM API *ShellyLanMan* for conversation
   agents.
 
-Either way the MCP server must be enabled in ShellyLanMan, and its access level
-(read / control / configure) decides what Assist may do.
+Either way the MCP server must be on in ShellyLanMan (*Settings → MCP*; on, read only,
+in a new installation since 0.9.12), and its access level (read / control / configure)
+decides what Assist may do. Home Assistant offers *Model Context Protocol* only while
+it is on.
 
 ### Remove the integration
 
