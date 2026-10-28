@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.10.0
+
+Runs ShellyLanMan 0.10.0.
+
+- **Firmware updates for Shellys without internet access**: in *Settings → Firmware*, let ShellyLanMan check Shelly's
+  index and serve the verified firmware; *Update* has the device download it from ShellyLanMan. The devices must
+  reach ShellyLanMan on its web port (3082).
+- A newer firmware shows as an orange ring and ⚡ on the status, on Devices, Checklist and Firmware alike; a turning
+  circle while a device is read or updated.
+- Firmware page: a copy button for each available version's download link; the status follows the device live.
+- Access-point wizard: a QR code to continue on your phone, clearer texts, and a last step that notices the device
+  is back when the phone returns to your Wi-Fi.
+- Fixed: after an update a device could stay on its old version with the ⚡ until the next check; switching on the
+  access point of a device on firmware 2.x without a password failed.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.9.13
 
 Runs ShellyLanMan 0.9.13.
