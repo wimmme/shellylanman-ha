@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0
+
+Runs ShellyLanMan 1.0.0.
+
+- The first stable release: the same as 0.10.0, which was installed and tested on a production Home Assistant.
+  Nothing changes when you update from 0.10.0.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 0.10.0
 
 Runs ShellyLanMan 0.10.0.
