@@ -1,0 +1,191 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ShellyLanMan",
+        "description": "Adresa ShellyLanMan, např. http://192.168.1.10:3082. MCP token (ShellyLanMan → Nastavení → MCP) je potřeba jen k tomu, aby Assist dostal nástroje ShellyLanMan.",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP token"
+        },
+        "data_description": {
+          "url": "Webová adresa ShellyLanMan, s http:// a portem, např. http://192.168.1.10:3082.",
+          "mcp_token": "Volitelné. ShellyLanMan → Nastavení → MCP. Potřebný pro Assist, když má ShellyLanMan heslo, a pro předání hesel Shelly do Home Assistantu."
+        }
+      },
+      "hassio_confirm": {
+        "title": "ShellyLanMan",
+        "description": "Přidat ShellyLanMan, který běží jako aplikace Home Assistantu ({url})?"
+      },
+      "reauth_confirm": {
+        "title": "ShellyLanMan: MCP token",
+        "description": "ShellyLanMan na adrese {url} odmítl MCP token, nebo má nyní heslo a token potřebuje. Zadejte MCP token z ShellyLanMan → Nastavení → MCP.",
+        "data": {
+          "mcp_token": "MCP token"
+        },
+        "data_description": {
+          "mcp_token": "ShellyLanMan → Nastavení → MCP."
+        }
+      },
+      "reconfigure": {
+        "title": "ShellyLanMan",
+        "data": {
+          "url": "URL",
+          "mcp_token": "MCP token"
+        },
+        "data_description": {
+          "url": "Webová adresa ShellyLanMan, s http:// a portem, např. http://192.168.1.10:3082.",
+          "mcp_token": "Volitelné. ShellyLanMan → Nastavení → MCP. Potřebný pro Assist, když má ShellyLanMan heslo, a pro předání hesel Shelly do Home Assistantu."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "ShellyLanMan na této adrese není dostupný.",
+      "invalid_token": "MCP token byl odmítnut.",
+      "too_old": "Tento ShellyLanMan je příliš starý: je potřeba verze 0.5.0 nebo novější.",
+      "unknown": "Neočekávaná chyba.",
+      "login_required": "ShellyLanMan je chráněn heslem: zadejte jeho MCP token (ShellyLanMan → Nastavení → MCP)."
+    },
+    "abort": {
+      "already_configured": "Tento ShellyLanMan je už nastaven.",
+      "cannot_connect": "ShellyLanMan není dostupný.",
+      "too_old": "Tento ShellyLanMan je příliš starý: je potřeba verze 0.5.0 nebo novější.",
+      "reconfigure_successful": "Uloženo.",
+      "wrong_instance": "Na této adrese je jiný ShellyLanMan.",
+      "login_required": "ShellyLanMan je chráněn heslem: integrace potřebuje jeho MCP token (ShellyLanMan → Nastavení → MCP).",
+      "reauth_successful": "Nový MCP token je uložen."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Stav ShellyLanMan",
+        "state": {
+          "online": "Online",
+          "offline": "Offline",
+          "login": "Je potřeba heslo",
+          "reading": "Načítá se",
+          "error": "Chyba",
+          "ghost": "Nenalezeno (archiv)",
+          "searching": "Vyhledává se"
+        }
+      },
+      "last_backup": {
+        "name": "Poslední záloha konfigurace"
+      },
+      "devices_online": {
+        "name": "Zařízení online"
+      },
+      "devices_offline": {
+        "name": "Zařízení offline"
+      },
+      "devices_attention": {
+        "name": "Zařízení vyžadující pozornost"
+      },
+      "version": {
+        "name": "Verze"
+      }
+    },
+    "binary_sensor": {
+      "eco_mode": {
+        "name": "Eco režim"
+      },
+      "led_off": {
+        "name": "LED vypnutá"
+      },
+      "debug_log": {
+        "name": "Diagnostický protokol"
+      },
+      "bluetooth": {
+        "name": "Bluetooth"
+      },
+      "access_point": {
+        "name": "Přístupový bod"
+      },
+      "roaming": {
+        "name": "Wi-Fi roaming"
+      },
+      "static_ip": {
+        "name": "Statická IP adresa"
+      },
+      "range_extender": {
+        "name": "Wi-Fi extender"
+      },
+      "auto_firmware_update": {
+        "name": "Automatická aktualizace firmwaru"
+      }
+    },
+    "button": {
+      "backup": {
+        "name": "Zálohovat konfiguraci"
+      },
+      "rescan": {
+        "name": "Znovu prohledat síť"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "add": {
+        "title": "Přidat zařízení Shelly do Home Assistantu",
+        "description": "ShellyLanMan zná {count} zařízení Shelly, která nejsou v integraci Shelly v Home Assistantu: {discovered} už Home Assistant objevil, {missed} Home Assistant nenabídl. Zaškrtněte ta, která chcete přidat; přidají se přes integraci Shelly, jako byste je přidali tam. Shelly s heslem dostane heslo uložené v ShellyLanMan (pokud je ShellyLanMan smí předat). Teď neodpovídají: {offline}.",
+        "data": {
+          "devices": "Zařízení Shelly"
+        }
+      },
+      "result": {
+        "title": "Přidaná zařízení Shelly",
+        "description": "Do integrace Shelly přidáno {added} z {total}.\n\n{details}"
+      }
+    },
+    "abort": {
+      "nothing_to_add": "Všechna zařízení Shelly, která ShellyLanMan zná, už jsou v integraci Shelly v Home Assistantu (nebo jsou tam ignorována).",
+      "not_loaded": "ShellyLanMan není načten; zkuste to znovu, až bude."
+    }
+  },
+  "issues": {
+    "shellys_missing": {
+      "title": "{count} zařízení Shelly není v Home Assistantu",
+      "fix_flow": {
+        "step": {
+          "init": {
+            "title": "{count} zařízení Shelly není v Home Assistantu",
+            "description": "ShellyLanMan zná {count} zařízení Shelly, která nejsou v integraci Shelly v Home Assistantu. Odešlete a vyberte, která přidat."
+          },
+          "add": {
+            "title": "Přidat zařízení Shelly do Home Assistantu",
+            "description": "ShellyLanMan zná {count} zařízení Shelly, která nejsou v integraci Shelly v Home Assistantu: {discovered} už Home Assistant objevil, {missed} Home Assistant nenabídl. Zaškrtněte ta, která chcete přidat; přidají se přes integraci Shelly, jako byste je přidali tam. Shelly s heslem dostane heslo uložené v ShellyLanMan (pokud je ShellyLanMan smí předat). Teď neodpovídají: {offline}.",
+            "data": {
+              "devices": "Zařízení Shelly"
+            }
+          },
+          "result": {
+            "title": "Přidaná zařízení Shelly",
+            "description": "Do integrace Shelly přidáno {added} z {total}.\n\n{details}"
+          }
+        },
+        "abort": {
+          "nothing_to_add": "Všechna zařízení Shelly, která ShellyLanMan zná, už jsou v integraci Shelly v Home Assistantu (nebo jsou tam ignorována).",
+          "not_loaded": "ShellyLanMan není načten; zkuste to znovu, až bude."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "request_failed": {
+      "message": "ShellyLanMan: {error}"
+    },
+    "backup_failed": {
+      "message": "Zálohování se nezdařilo: {reason}"
+    },
+    "cannot_connect": {
+      "message": "ShellyLanMan není dostupný: {error}"
+    },
+    "update_failed": {
+      "message": "ShellyLanMan se nepodařilo načíst: {error}"
+    },
+    "login_required": {
+      "message": "ShellyLanMan je chráněn heslem: integrace potřebuje jeho MCP token (ShellyLanMan → Nastavení → MCP)."
+    }
+  }
+}

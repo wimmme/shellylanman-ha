@@ -9,6 +9,7 @@ Towards integration 1.0.0: Home Assistant's quality scale Gold and Platinum (sel
 
 - **Diagnostics**: *Settings → Devices & services → ShellyLanMan → ⋮ → Download diagnostics* gives ShellyLanMan's version, the last poll, the devices and the checklist, without the MCP token.
 - **Error messages in your language**: a failed backup or rescan, an Assist tool that fails, ShellyLanMan not reachable or asking for its MCP token.
+- **Czech**: the integration now speaks ShellyLanMan's 9 languages, the *Add Shellys* dialog included.
 - **Icons** for every entity; the status and the checklist items change icon with their state.
 - The code is fully typed and checked with strict mypy in the tests and CI, against the oldest and the newest supported Home Assistant.
 - README: supported Shellys, how and how often the data is updated, use cases, example automations, known limitations and troubleshooting. `QUALITY_SCALE.md`: Bronze to Platinum met.

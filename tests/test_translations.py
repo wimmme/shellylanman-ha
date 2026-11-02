@@ -12,7 +12,7 @@ import pytest
 from custom_components.shellylanman.add_flow import _OUTCOMES, _STATES
 
 COMPONENT = Path(__file__).parent.parent / "custom_components" / "shellylanman"
-LANGUAGES = ["bg", "de", "en", "es", "fr", "it", "nl", "zh-Hans"]
+LANGUAGES = ["bg", "cs", "de", "en", "es", "fr", "it", "nl", "zh-Hans"]
 
 
 def _flat(node: Any, prefix: str = "") -> dict[str, str]:

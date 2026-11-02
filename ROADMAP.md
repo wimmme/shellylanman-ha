@@ -10,7 +10,7 @@ Ideas and wishes are welcome as a [GitHub issue](https://github.com/wimmme/shell
   **every tier is met, Platinum included** (self-assessment in [`QUALITY_SCALE.md`](QUALITY_SCALE.md)):
   diagnostics, translated error messages, icons, strict typing, and the README sections
   on updates, supported Shellys, use cases, examples, limitations and troubleshooting.
-- The integration in ShellyLanMan's 8 languages.
+- The integration in ShellyLanMan's 9 languages (Czech added for 1.0.0).
 
 ## After Home Assistant 2026.11 (HACS becomes the Marketplace)
 
