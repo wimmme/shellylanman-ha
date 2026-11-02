@@ -46,9 +46,9 @@ class StateCoordinator(DataUpdateCoordinator[State]):
             devices = await self.client.devices()
             backups = await self.client.backups()
         except ShellyLanManLoginRequired as err:
-            raise ConfigEntryAuthFailed(str(err)) from err
+            raise ConfigEntryAuthFailed(translation_domain=DOMAIN, translation_key="login_required") from err
         except ShellyLanManError as err:
-            raise UpdateFailed(str(err)) from err
+            raise UpdateFailed(translation_domain=DOMAIN, translation_key="update_failed", translation_placeholders={"error": str(err)}) from err
         last: dict[str, int] = {}
         for b in backups:  # newest first
             last.setdefault(b.get("deviceId", ""), int(b.get("time", 0)))
@@ -74,7 +74,7 @@ class ChecklistCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
         try:
             rows = await self.client.checklist()
         except ShellyLanManLoginRequired as err:
-            raise ConfigEntryAuthFailed(str(err)) from err
+            raise ConfigEntryAuthFailed(translation_domain=DOMAIN, translation_key="login_required") from err
         except ShellyLanManError as err:
-            raise UpdateFailed(str(err)) from err
+            raise UpdateFailed(translation_domain=DOMAIN, translation_key="update_failed", translation_placeholders={"error": str(err)}) from err
         return {r["id"]: r for r in rows if r.get("id")}

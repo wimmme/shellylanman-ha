@@ -46,9 +46,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ShellyLanManConfigEntry)
     try:
         about = await client.about()
     except ShellyLanManLoginRequired as err:  # a UI password since set-up: the token is needed
-        raise ConfigEntryAuthFailed(str(err)) from err
+        raise ConfigEntryAuthFailed(translation_domain=DOMAIN, translation_key="login_required") from err
     except ShellyLanManError as err:
-        raise ConfigEntryNotReady(str(err)) from err
+        raise ConfigEntryNotReady(translation_domain=DOMAIN, translation_key="cannot_connect", translation_placeholders={"error": str(err)}) from err
     if client.mcp_token:
         # A refused token asks for a new one (reauth); the rest works without it.
         try:

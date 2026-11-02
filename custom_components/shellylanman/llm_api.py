@@ -16,10 +16,9 @@ from typing import Any
 from probatio import from_openapi
 
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import llm
 
-from .api import ShellyLanManClient, ShellyLanManError
+from .api import ShellyLanManClient, ShellyLanManError, request_failed
 from .const import vol
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,7 @@ class ShellyLanManTool(llm.Tool):
         try:
             result = await self.client.mcp("tools/call", {"name": tool_input.tool_name, "arguments": tool_input.tool_args})
         except ShellyLanManError as err:
-            raise HomeAssistantError(f"ShellyLanMan: {err}") from err
+            raise request_failed(err) from err
         return result or {}
 
 
@@ -58,7 +57,7 @@ class ShellyLanManAPI(llm.API):
         try:
             listed = await self.client.mcp("tools/list")
         except ShellyLanManError as err:
-            raise HomeAssistantError(f"ShellyLanMan: {err}") from err
+            raise request_failed(err) from err
         tools: list[llm.Tool] = []
         for t in (listed or {}).get("tools", []):
             try:

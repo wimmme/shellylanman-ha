@@ -3,6 +3,14 @@
 The app has its own changelog in `shellylanman/CHANGELOG.md`. Up to 0.9.12 the app and the integration had the
 same version; since then the integration gets a new version only when it changes.
 
+## Unreleased
+
+Towards integration 1.0.0: Home Assistant's quality scale Gold and Platinum (self-assessed, `QUALITY_SCALE.md`).
+
+- **Diagnostics**: *Settings → Devices & services → ShellyLanMan → ⋮ → Download diagnostics* gives ShellyLanMan's version, the last poll, the devices and the checklist, without the MCP token.
+- **Error messages in your language**: a failed backup or rescan, an Assist tool that fails, ShellyLanMan not reachable or asking for its MCP token.
+- **Icons** for every entity; the status and the checklist items change icon with their state.
+
 ## 0.9.12
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.

@@ -45,6 +45,22 @@ def test_english_is_strings_json() -> None:
     assert _flat(json.loads((COMPONENT / "translations" / "en.json").read_text(encoding="utf-8"))) == STRINGS
 
 
+def test_icons() -> None:
+    """An icon for every entity, and none for an entity that does not exist."""
+    icons = json.loads((COMPONENT / "icons.json").read_text(encoding="utf-8"))["entity"]
+    names = json.loads((COMPONENT / "strings.json").read_text(encoding="utf-8"))["entity"]
+    assert {p: sorted(e) for p, e in icons.items()} == {p: sorted(e) for p, e in names.items()}
+    status = icons["sensor"]["status"]["state"]
+    assert sorted(status) == sorted(names["sensor"]["status"]["state"])
+
+
+def test_exception_keys() -> None:
+    """Every translation_key the code raises has a text, and every text is used."""
+    code = "".join(p.read_text(encoding="utf-8") for p in COMPONENT.glob("*.py"))
+    used = set(re.findall(r'translation_key="(\w+)"', code))
+    assert used == set(json.loads((COMPONENT / "strings.json").read_text(encoding="utf-8"))["exceptions"])
+
+
 def test_add_dialog_texts() -> None:
     """The texts the add dialog builds itself: one table per language (Home Assistant's zh-Hans is "zh")."""
     wanted = sorted(lang.split("-")[0] for lang in LANGUAGES)

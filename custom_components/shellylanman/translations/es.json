@@ -170,5 +170,22 @@
         }
       }
     }
+  },
+  "exceptions": {
+    "request_failed": {
+      "message": "ShellyLanMan: {error}"
+    },
+    "backup_failed": {
+      "message": "La copia de seguridad falló: {reason}"
+    },
+    "cannot_connect": {
+      "message": "No se puede conectar con ShellyLanMan: {error}"
+    },
+    "update_failed": {
+      "message": "No se pudo leer ShellyLanMan: {error}"
+    },
+    "login_required": {
+      "message": "ShellyLanMan está protegido con contraseña: la integración necesita su token MCP (ShellyLanMan → Ajustes → MCP)."
+    }
   }
 }

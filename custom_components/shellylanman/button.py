@@ -8,7 +8,8 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import ShellyLanManConfigEntry
-from .api import ShellyLanManError
+from .api import ShellyLanManError, request_failed
+from .const import DOMAIN
 from .coordinator import StateCoordinator
 from .entity import DeviceEntity, ServiceEntity
 
@@ -42,10 +43,11 @@ class BackupButton(DeviceEntity, ButtonEntity):
         try:
             lines = await self.coordinator.client.backup(self.device_id)
         except ShellyLanManError as err:
-            raise HomeAssistantError(str(err)) from err
+            raise request_failed(err) from err
         failed = [line for line in lines if line.get("result") not in ("ok", "queued", "stored")]
         if failed:
-            raise HomeAssistantError(f"Backup failed: {failed[0].get('message') or failed[0].get('result')}")
+            reason = str(failed[0].get("message") or failed[0].get("result"))
+            raise HomeAssistantError(translation_domain=DOMAIN, translation_key="backup_failed", translation_placeholders={"reason": reason})
         await self.coordinator.async_request_refresh()
 
 
@@ -58,4 +60,4 @@ class RescanButton(ServiceEntity, ButtonEntity):
         try:
             await self.coordinator.client.rescan()
         except ShellyLanManError as err:
-            raise HomeAssistantError(str(err)) from err
+            raise request_failed(err) from err

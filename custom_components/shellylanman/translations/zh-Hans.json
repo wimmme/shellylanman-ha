@@ -170,5 +170,22 @@
         }
       }
     }
+  },
+  "exceptions": {
+    "request_failed": {
+      "message": "ShellyLanMan：{error}"
+    },
+    "backup_failed": {
+      "message": "备份失败：{reason}"
+    },
+    "cannot_connect": {
+      "message": "无法连接 ShellyLanMan：{error}"
+    },
+    "update_failed": {
+      "message": "无法读取 ShellyLanMan：{error}"
+    },
+    "login_required": {
+      "message": "ShellyLanMan 受密码保护：集成需要它的 MCP 令牌（ShellyLanMan → 设置 → MCP）。"
+    }
   }
 }

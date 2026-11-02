@@ -1,0 +1,97 @@
+{
+  "entity": {
+    "sensor": {
+      "status": {
+        "default": "mdi:lan",
+        "state": {
+          "online": "mdi:lan-connect",
+          "offline": "mdi:lan-disconnect",
+          "login": "mdi:lock-alert",
+          "reading": "mdi:lan-pending",
+          "error": "mdi:alert-circle",
+          "ghost": "mdi:archive-outline",
+          "searching": "mdi:magnify"
+        }
+      },
+      "last_backup": {
+        "default": "mdi:content-save-cog"
+      },
+      "devices_online": {
+        "default": "mdi:lan-connect"
+      },
+      "devices_offline": {
+        "default": "mdi:lan-disconnect"
+      },
+      "devices_attention": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "version": {
+        "default": "mdi:information-outline"
+      }
+    },
+    "binary_sensor": {
+      "eco_mode": {
+        "default": "mdi:leaf-off",
+        "state": {
+          "on": "mdi:leaf"
+        }
+      },
+      "led_off": {
+        "default": "mdi:led-on",
+        "state": {
+          "on": "mdi:led-off"
+        }
+      },
+      "debug_log": {
+        "default": "mdi:math-log",
+        "state": {
+          "on": "mdi:bug"
+        }
+      },
+      "bluetooth": {
+        "default": "mdi:bluetooth-off",
+        "state": {
+          "on": "mdi:bluetooth"
+        }
+      },
+      "access_point": {
+        "default": "mdi:access-point-off",
+        "state": {
+          "on": "mdi:access-point"
+        }
+      },
+      "roaming": {
+        "default": "mdi:wifi-cancel",
+        "state": {
+          "on": "mdi:wifi-sync"
+        }
+      },
+      "static_ip": {
+        "default": "mdi:ip-network-outline",
+        "state": {
+          "on": "mdi:ip-network"
+        }
+      },
+      "range_extender": {
+        "default": "mdi:wifi-off",
+        "state": {
+          "on": "mdi:wifi-plus"
+        }
+      },
+      "auto_firmware_update": {
+        "default": "mdi:update",
+        "state": {
+          "on": "mdi:autorenew"
+        }
+      }
+    },
+    "button": {
+      "backup": {
+        "default": "mdi:content-save"
+      },
+      "rescan": {
+        "default": "mdi:radar"
+      }
+    }
+  }
+}

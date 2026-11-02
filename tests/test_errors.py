@@ -89,8 +89,16 @@ async def test_button_errors(hass: HomeAssistant, aioclient_mock: AiohttpClientM
     aioclient_mock.post(f"{URL}/api/v1/scan", status=500)
     mock_shellylanman(aioclient_mock)
     for unique_id in ("80646F838136-backup", f"{INSTANCE}-rescan"):
-        with pytest.raises(HomeAssistantError, match="HTTP 500"):
+        with pytest.raises(HomeAssistantError, match="^ShellyLanMan: POST /(backup|scan): HTTP 500") as err:
             await hass.services.async_call("button", "press", {"entity_id": _entity_id(hass, "button", unique_id)}, blocking=True)
+        assert err.value.translation_key == "request_failed"
+
+    # ShellyLanMan answers, but the device could not be backed up.
+    aioclient_mock.clear_requests()
+    aioclient_mock.post(f"{URL}/api/v1/backup", json={"results": [{"id": "80646F838136", "result": "error", "message": "device offline"}]})
+    mock_shellylanman(aioclient_mock)
+    with pytest.raises(HomeAssistantError, match="^Backup failed: device offline$"):
+        await hass.services.async_call("button", "press", {"entity_id": _entity_id(hass, "button", "80646F838136-backup")}, blocking=True)
 
 
 async def test_llm_api_errors(hass: HomeAssistant, aioclient_mock: AiohttpClientMocker, entry: MockConfigEntry) -> None:

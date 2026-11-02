@@ -13,7 +13,10 @@ from typing import Any
 import aiohttp
 from yarl import URL
 
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.util.json import json_loads
+
+from .const import DOMAIN
 
 
 # The Home Assistant app's loopback listener (app options mcp_local and
@@ -39,6 +42,11 @@ class ShellyLanManAuthError(ShellyLanManError):
 
 class ShellyLanManLoginRequired(ShellyLanManError):
     """ShellyLanMan has a UI password and the request had no (valid) MCP token."""
+
+
+def request_failed(err: ShellyLanManError) -> HomeAssistantError:
+    """ShellyLanMan's error for the user (a button, Assist), in their language."""
+    return HomeAssistantError(translation_domain=DOMAIN, translation_key="request_failed", translation_placeholders={"error": str(err)})
 
 
 def _error_of(text: str) -> tuple[str | None, str]:
