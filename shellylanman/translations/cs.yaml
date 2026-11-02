@@ -1,0 +1,20 @@
+configuration:
+  port:
+    name: Port webového rozhraní
+    description: >-
+      Webové rozhraní a API ShellyLanMan ve vaší síti LAN (výchozí 3082), např.
+      http://homeassistant.local:3082. Změňte ho, pokud port 3082 na tomto hostiteli
+      používá jiný program. Postranní panel ho nepotřebuje.
+  mcp_local:
+    name: Místní přístup pro Home Assistant bez tokenu
+    description: >-
+      Nabízet MCP server ShellyLanMan a volání integrace ShellyLanMan na 127.0.0.1 bez
+      tokenu, aby je Home Assistant na tomto hostiteli (MCP klient Assistu, integrace)
+      mohl používat, i když má ShellyLanMan heslo. Dosáhnou na něj jen programy na tomto
+      hostiteli; pro MCP musí být MCP server v ShellyLanMan zapnutý (Nastavení → MCP) a
+      platí jeho úroveň přístupu.
+  mcp_local_port:
+    name: Port místního přístupu
+    description: >-
+      Port na 127.0.0.1 pro výše uvedený místní přístup (výchozí 8097). Změňte ho, pokud
+      port 8097 na tomto hostiteli používá jiný program; integrace se přizpůsobí sama.

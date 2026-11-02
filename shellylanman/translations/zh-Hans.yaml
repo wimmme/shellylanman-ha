@@ -1,0 +1,16 @@
+configuration:
+  port:
+    name: Web 界面端口
+    description: >-
+      ShellyLanMan 在局域网中的 Web 界面和 API（默认 3082），例如
+      http://homeassistant.local:3082。如果此主机上的其他程序占用了 3082，请更改。侧边栏不需要它。
+  mcp_local:
+    name: Home Assistant 免令牌本地访问
+    description: >-
+      在 127.0.0.1 上免令牌提供 ShellyLanMan 的 MCP 服务器和 ShellyLanMan 集成的调用，使此主机上的 Home
+      Assistant（Assist 的 MCP 客户端、集成）即使在 ShellyLanMan 设有密码时也能使用。只有此主机上的程序可以访问；对于 MCP，必须在
+      ShellyLanMan 中启用 MCP 服务器（设置 → MCP），并适用其访问级别。
+  mcp_local_port:
+    name: 本地访问端口
+    description: >-
+      上述本地访问在 127.0.0.1 上使用的端口（默认 8097）。如果此主机上的其他程序占用了 8097，请更改；集成会自动跟随。

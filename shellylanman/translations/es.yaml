@@ -1,0 +1,21 @@
+configuration:
+  port:
+    name: Puerto de la interfaz web
+    description: >-
+      La interfaz web y la API de ShellyLanMan en tu red local (por defecto 3082), p. ej.
+      http://homeassistant.local:3082. Cámbialo si otro programa de este host usa el 3082.
+      La barra lateral no lo necesita.
+  mcp_local:
+    name: Acceso local para Home Assistant sin token
+    description: >-
+      Ofrecer el servidor MCP de ShellyLanMan y las llamadas de la integración
+      ShellyLanMan en 127.0.0.1 sin token, para que Home Assistant en este host (el
+      cliente MCP de Assist, la integración) pueda usarlos, también cuando ShellyLanMan
+      tiene contraseña. Solo los programas de este host pueden alcanzarlo; para MCP, el
+      servidor MCP debe estar activado en ShellyLanMan (Ajustes → MCP) y se aplica su
+      nivel de acceso.
+  mcp_local_port:
+    name: Puerto del acceso local
+    description: >-
+      El puerto en 127.0.0.1 del acceso local de arriba (por defecto 8097). Cámbialo si
+      otro programa de este host usa el 8097; la integración lo sigue sola.

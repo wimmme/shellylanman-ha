@@ -8,10 +8,12 @@ import re
 from typing import Any
 
 import pytest
+import yaml
 
 from custom_components.shellylanman.add_flow import _OUTCOMES, _STATES
 
 COMPONENT = Path(__file__).parent.parent / "custom_components" / "shellylanman"
+APP = Path(__file__).parent.parent / "shellylanman" / "translations"
 LANGUAGES = ["bg", "cs", "de", "en", "es", "fr", "it", "nl", "zh-Hans"]
 
 
@@ -43,6 +45,17 @@ def test_same_keys_and_placeholders(language: str) -> None:
 
 def test_english_is_strings_json() -> None:
     assert _flat(json.loads((COMPONENT / "translations" / "en.json").read_text(encoding="utf-8"))) == STRINGS
+
+
+def test_app_options() -> None:
+    """The app's option texts (Supervisor) in the same languages, every option named and described."""
+    assert sorted(p.stem for p in APP.glob("*.yaml")) == LANGUAGES
+    en = yaml.safe_load((APP / "en.yaml").read_text(encoding="utf-8"))
+    for language in LANGUAGES:
+        texts = yaml.safe_load((APP / f"{language}.yaml").read_text(encoding="utf-8"))
+        assert texts.keys() == en.keys() and texts["configuration"].keys() == en["configuration"].keys(), language
+        for option, text in texts["configuration"].items():
+            assert text.keys() == {"name", "description"} and all(v.strip() for v in text.values()), (language, option)
 
 
 def test_icons() -> None:

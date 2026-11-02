@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- The app's options are explained in all 9 languages of ShellyLanMan (German, French, Spanish, Italian, Czech,
+  Bulgarian and Chinese next to English and Dutch).
+
 ## 1.0.0
 
 Runs ShellyLanMan 1.0.0.
