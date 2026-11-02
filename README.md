@@ -8,7 +8,7 @@
   <a href="https://github.com/wimmme/shellylanman-ha/actions/workflows/github-code-scanning/codeql"><img src="https://img.shields.io/github/actions/workflow/status/wimmme/shellylanman-ha/dynamic%2Fgithub-code-scanning%2Fcodeql?branch=main&amp;style=flat-square&amp;label=CodeQL" alt="CodeQL"></a>
   <a href="https://hacs.xyz"><img src="https://img.shields.io/badge/HACS-default-41BDF5?style=flat-square" alt="HACS default"></a>
   <a href="https://www.home-assistant.io"><img src="https://img.shields.io/badge/Home%20Assistant-2026.9%2B-41BDF5?style=flat-square" alt="Home Assistant 2026.9+"></a>
-  <a href="QUALITY_SCALE.md"><img src="https://img.shields.io/badge/quality%20scale-silver%20(self--assessed)-C0C0C0?style=flat-square" alt="Quality scale: Silver (self-assessed)"></a>
+  <a href="QUALITY_SCALE.md"><img src="https://img.shields.io/badge/quality%20scale-platinum%20(self--assessed)-7E8C9A?style=flat-square" alt="Quality scale: Platinum (self-assessed)"></a>
   <a href="https://github.com/wimmme/shellylanman-ha/pkgs/container/shellylanman-ha"><img src="https://img.shields.io/badge/docker-ghcr.io%2Fwimmme%2Fshellylanman--ha-2496ED?style=flat-square&amp;logo=docker&amp;logoColor=white" alt="Docker image"></a>
   <img src="https://img.shields.io/badge/platforms-amd64%20%7C%20arm64-6b7280?style=flat-square" alt="Platforms">
   <img src="https://img.shields.io/badge/Shelly-Gen1%20%7C%20Gen2%20%7C%20Gen3%20%7C%20Gen4%20%7C%20BLU-1e40af?style=flat-square" alt="Shelly generations">
@@ -97,6 +97,31 @@ What you get:
 Relays, lights, meters and firmware updates stay with Home Assistant's own Shelly
 integration; ShellyLanMan is not in the path of your automations.
 
+### Supported Shellys
+
+Every Shelly ShellyLanMan knows: Gen1, Gen2 (Plus and Pro), Gen3 and Gen4, and BLU
+devices through their gateways. A Shelly gets its device in Home Assistant once
+ShellyLanMan has identified it (read its MAC address); until then ShellyLanMan lists it
+by address only. The checklist entities exist only for the items that apply to a
+device: a Gen1 plug has no Bluetooth, a BLU device no Wi-Fi.
+
+### How the data is updated
+
+The integration polls ShellyLanMan; it never talks to the Shellys itself.
+
+- **Every 30 seconds**: the devices, their status and their newest configuration
+  backup. ShellyLanMan answers from its own cache, so this costs the Shellys nothing.
+  A change on a Shelly reaches Home Assistant after ShellyLanMan has seen it, plus up
+  to 30 seconds.
+- **Every 30 minutes**: the checklist. It reads every device's settings (one request
+  per Shelly), so it is read seldom.
+- **On demand**: after *Back up configuration*, and when the *Add Shellys* dialog opens.
+
+A new Shelly gets its entities without a reload, at the next poll (its checklist
+entities at the next checklist poll). When ShellyLanMan cannot be reached, the
+entities become unavailable and the integration logs it once; they come back by
+themselves.
+
 ### Add your Shellys to Home Assistant
 
 Home Assistant discovers most Shellys itself, but wants one click per device, and it
@@ -128,6 +153,119 @@ Either way the MCP server must be on in ShellyLanMan (*Settings → MCP*; on, re
 in a new installation since 0.9.12), and its access level (read / control / configure)
 decides what Assist may do. Home Assistant offers *Model Context Protocol* only while
 it is on.
+
+### Use cases
+
+- **See at a glance** which Shellys are off line or need attention (an error, a
+  password ShellyLanMan lacks), on a dashboard and in the history.
+- **Back up every Shelly's configuration on a schedule** from an automation, and see
+  per device when it was last backed up.
+- **Keep an eye on settings** that should stay as they are: a debug log left on,
+  automatic firmware updates, the access point, eco mode.
+- **Add the Shellys Home Assistant missed** in one go (*Configure* or the repair notice).
+- **Ask Assist** about your Shellys, or let it act through ShellyLanMan's tools.
+
+### Examples
+
+Entity ids depend on your device names; *Kitchen* is an example. Notify when Shellys
+need attention for five minutes:
+
+```yaml
+automation:
+  - alias: "Shellys need attention"
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.shellylanman_devices_needing_attention
+        above: 0
+        for: "00:05:00"
+    actions:
+      - action: notify.notify
+        data:
+          message: >
+            {{ states('sensor.shellylanman_devices_needing_attention') }} Shelly(s)
+            need attention in ShellyLanMan.
+```
+
+Back up every Shelly on Sunday night (the buttons run one backup at a time):
+
+```yaml
+automation:
+  - alias: "Weekly Shelly configuration backup"
+    triggers:
+      - trigger: time
+        at: "03:00:00"
+    conditions:
+      - condition: time
+        weekday: sun
+    actions:
+      - action: button.press
+        target:
+          entity_id: >
+            {{ integration_entities('shellylanman')
+               | select('search', '_back_up_configuration$') | list }}
+```
+
+Warn when a Shelly's debug log has been on for a day (enable the *Debug log* entity
+first; checklist entities are disabled by default):
+
+```yaml
+automation:
+  - alias: "Shelly debug log left on"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.kitchen_debug_log
+        to: "on"
+        for: "24:00:00"
+    actions:
+      - action: notify.notify
+        data:
+          message: "The debug log of the kitchen Shelly is still on."
+```
+
+### Known limitations
+
+- It needs a running ShellyLanMan (0.5.0 or newer): the app, or the Docker version.
+- It does not switch or measure anything: that is the Shelly integration's work.
+- It polls: a change reaches Home Assistant up to 30 seconds after ShellyLanMan saw
+  it, and the checklist can be 30 minutes old.
+- The checklist entities are read only: change a setting in ShellyLanMan
+  (*Checklist* page), and it shows at the next checklist poll.
+- A battery-powered Shelly sleeps most of the time and may show *Offline* while it
+  sleeps.
+- *Add Shellys* adds Wi-Fi Shellys (Gen1 to Gen4); BLU devices are added in Home
+  Assistant through Bluetooth or a Shelly gateway, as usual.
+- Shelly passwords are handed to Home Assistant only on a trusted path (the app on
+  the same host, or the MCP token with access level *configure*).
+
+### Troubleshooting
+
+- **"Cannot reach ShellyLanMan at this address"**: open the same URL in a browser on a
+  machine in the same network as Home Assistant. Use `http://`, the host and the port
+  (`3082` unless you changed it). With the app, use the entry Home Assistant
+  discovers instead of typing an address.
+- **Home Assistant asks for the MCP token** (a notice under *Settings → Devices &
+  services*): ShellyLanMan refused the token, or got a UI password after the
+  integration was set up. Copy the token from ShellyLanMan → *Settings → MCP*.
+- **All entities unavailable**: ShellyLanMan is stopped or not reachable. Start it;
+  the entities come back at the next poll.
+- **Status *Password needed***: ShellyLanMan has no (correct) password for that Shelly.
+  Enter it in ShellyLanMan: *Login* on the device, or the default credentials under
+  *Settings → Network*.
+- **A Shelly is missing in *Add Shellys***: the dialog lists Wi-Fi Shellys that
+  ShellyLanMan has identified and that are not in the Shelly integration. A Shelly you
+  once *ignored* there stays hidden until you un-ignore it (*Settings → Devices &
+  services → Shelly → Ignored*). A Shelly that does not answer is listed but cannot be
+  added now.
+- **No checklist entities**: they are disabled by default. Open the device and enable
+  the ones you want; only the items that apply to the device exist.
+- **Assist has no ShellyLanMan tools**: the MCP server must be on in ShellyLanMan
+  (*Settings → MCP*) and the MCP token set in the integration (*Reconfigure*); the
+  access level decides which tools Assist gets.
+
+When you report a problem, add the integration's diagnostics (*Settings → Devices &
+services → ShellyLanMan → ⋮ → Download diagnostics*; the MCP token is left out) and,
+if you can, a debug log (*⋮ → Enable debug logging*, repeat the problem, *Disable
+debug logging*), in a [GitHub issue](https://github.com/wimmme/shellylanman-ha/issues).
 
 ### Remove the integration
 

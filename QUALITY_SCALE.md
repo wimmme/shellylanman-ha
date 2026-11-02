@@ -5,10 +5,10 @@ grades core integrations: Bronze, Silver, Gold, Platinum. It is awarded to core
 integrations in review; a custom integration cannot claim a tier. This is a
 self-assessment of `custom_components/shellylanman` against the
 [rules](https://contributors.home-assistant.io/core/quality-scale/rules/), so you know
-what to expect and what is still open. Last checked: 2026-10-22, version 0.9.11.
+what to expect. Last checked: 2026-11-02, before integration 1.0.0: every tier is met.
 
 **done** — the rule is met · **exempt** — the rule does not apply, with the reason ·
-**todo** — not met yet. The plan for the open rules is in [`ROADMAP.md`](ROADMAP.md).
+**todo** — not met yet.
 
 ## Bronze — met
 
@@ -50,36 +50,36 @@ what to expect and what is still open. Last checked: 2026-10-22, version 0.9.11.
 | reauthentication-flow | done | A refused MCP token, or a UI password set after set-up, asks for a new token |
 | test-coverage | done | 99 % overall, every module 96 % or more |
 
-## Gold
+## Gold — met
 
 | Rule | | How |
 |---|---|---|
 | devices | done | A device per Shelly (linked to the Shelly integration's by MAC) and one for ShellyLanMan |
-| diagnostics | todo | |
+| diagnostics | done | *Download diagnostics*: version, both polls, devices, backups, checklist; the MCP token redacted |
 | discovery | done | From the app (Supervisor discovery) |
 | discovery-update-info | done | A new address from the app updates the entry |
-| docs-data-update | todo | The intervals are not in the README |
-| docs-examples | todo | |
-| docs-known-limitations | todo | |
-| docs-supported-devices | todo | The Shellys ShellyLanMan supports; not listed here |
+| docs-data-update | done | README, *How the data is updated* |
+| docs-examples | done | README, *Examples*: attention notice, weekly backup, checklist item |
+| docs-known-limitations | done | README, *Known limitations* |
+| docs-supported-devices | done | README, *Supported Shellys* |
 | docs-supported-functions | done | README, the entity table |
-| docs-troubleshooting | todo | |
-| docs-use-cases | todo | Partly in the README |
+| docs-troubleshooting | done | README, *Troubleshooting*, with diagnostics and debug logging |
+| docs-use-cases | done | README, *Use cases* |
 | dynamic-devices | done | New Shellys get entities without a reload |
 | entity-category | done | Per-device entities are diagnostic |
 | entity-device-class | done | Status `enum`, last backup `timestamp` |
 | entity-disabled-by-default | done | The checklist items |
 | entity-translations | done | |
-| exception-translations | todo | Button errors are plain text |
-| icon-translations | todo | No `icons.json` |
+| exception-translations | done | Buttons, Assist, set-up and polls raise translated errors (`exceptions` in `strings.json`) |
+| icon-translations | done | `icons.json`, per state for the status and the checklist items |
 | reconfiguration-flow | done | |
 | repair-issues | done | *Shellys not in Home Assistant*, with a fix |
 | stale-devices | done | A Shelly ShellyLanMan no longer lists can be deleted |
 
-## Platinum
+## Platinum — met
 
 | Rule | | How |
 |---|---|---|
 | async-dependency | done | The client is the integration's own aiohttp code |
 | inject-websession | done | `async_get_clientsession` |
-| strict-typing | todo | No strict mypy run |
+| strict-typing | done | `mypy.ini` (strict, Home Assistant's extra checks), run by `tools/test.sh` and CI against both supported Home Assistant versions |

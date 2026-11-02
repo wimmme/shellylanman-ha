@@ -11,6 +11,7 @@ Towards integration 1.0.0: Home Assistant's quality scale Gold and Platinum (sel
 - **Error messages in your language**: a failed backup or rescan, an Assist tool that fails, ShellyLanMan not reachable or asking for its MCP token.
 - **Icons** for every entity; the status and the checklist items change icon with their state.
 - The code is fully typed and checked with strict mypy in the tests and CI, against the oldest and the newest supported Home Assistant.
+- README: supported Shellys, how and how often the data is updated, use cases, example automations, known limitations and troubleshooting. `QUALITY_SCALE.md`: Bronze to Platinum met.
 
 ## 0.9.12
 
