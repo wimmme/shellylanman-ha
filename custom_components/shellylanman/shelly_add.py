@@ -19,6 +19,7 @@ from __future__ import annotations
 import asyncio
 from dataclasses import dataclass
 import logging
+from collections.abc import Mapping
 from typing import Any
 
 from homeassistant.config_entries import SOURCE_IGNORE, SOURCE_USER
@@ -83,10 +84,10 @@ def candidates(hass: HomeAssistant, devices: dict[str, dict[str, Any]]) -> list[
     """
     have = {(e.unique_id or "").upper() for e in hass.config_entries.async_entries(SHELLY, include_ignore=True, include_disabled=True)}
     flows: dict[str, dict[str, Any]] = {}
-    for flow in hass.config_entries.flow.async_progress_by_handler(SHELLY):
-        uid = (flow["context"].get("unique_id") or "").upper()
-        if uid and flow["context"].get("source") != SOURCE_IGNORE:
-            flows[uid] = dict(flow)
+    for progress in hass.config_entries.flow.async_progress_by_handler(SHELLY):
+        uid = (progress["context"].get("unique_id") or "").upper()
+        if uid and progress["context"].get("source") != SOURCE_IGNORE:
+            flows[uid] = dict(progress)
     out: list[Candidate] = []
     for dev_id, dev in devices.items():
         if not is_mac(dev_id) or dev.get("gen") not in WIFI_GENS or dev_id.upper() in have:
@@ -125,7 +126,7 @@ def _credentials_input(gen: str, cred: dict[str, Any]) -> dict[str, Any]:
     return {"password": cred.get("password", "")}
 
 
-async def _finish(hass: HomeAssistant, c: Candidate, client: ShellyLanManClient, result: dict[str, Any]) -> Result:
+async def _finish(hass: HomeAssistant, c: Candidate, client: ShellyLanManClient, result: Mapping[str, Any]) -> Result:
     """Answer the Shelly flow's steps until it creates the entry, aborts or needs what we lack."""
     for _ in range(6):  # user → user_manual → credentials → entry, with room to spare
         kind = result.get("type")
@@ -162,7 +163,7 @@ async def _finish(hass: HomeAssistant, c: Candidate, client: ShellyLanManClient,
     return _abandon(hass, result, Result(c, "failed", "too many steps"))
 
 
-def _abandon(hass: HomeAssistant, result: dict[str, Any], r: Result) -> Result:
+def _abandon(hass: HomeAssistant, result: Mapping[str, Any], r: Result) -> Result:
     """End a flow we started and cannot finish (never one Home Assistant discovered)."""
     if r.candidate.flow_id is None and result.get("flow_id"):
         try:
@@ -181,7 +182,7 @@ async def add_one(hass: HomeAssistant, client: ShellyLanManClient, c: Candidate)
                 return Result(c, "failed", "the discovery is gone")
             return await _finish(hass, c, client, {"type": FlowResultType.FORM, "flow_id": c.flow_id, "step_id": flow.get("step_id")})
         result = await hass.config_entries.flow.async_init(SHELLY, context={"source": SOURCE_USER})
-        return await _finish(hass, c, client, dict(result))
+        return await _finish(hass, c, client, result)
     except AbortFlow as err:
         return Result(c, "added" if err.reason == "already_configured" else "failed", "" if err.reason == "already_configured" else err.reason)
     except Exception as err:  # noqa: BLE001 - one Shelly must not stop the others

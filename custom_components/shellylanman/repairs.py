@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from homeassistant.components.repairs import RepairsFlow
+from homeassistant.components.repairs import RepairsFlow, RepairsFlowResult
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
 
 from .add_flow import AddShellysSteps
 
@@ -15,7 +14,7 @@ if TYPE_CHECKING:
     from . import RuntimeData
 
 
-class AddShellysRepairFlow(AddShellysSteps, RepairsFlow):
+class AddShellysRepairFlow(AddShellysSteps[RepairsFlowResult], RepairsFlow):
     """The same list and result as Configure → Add Shellys to Home Assistant."""
 
     def __init__(self, entry_id: str) -> None:
@@ -25,10 +24,10 @@ class AddShellysRepairFlow(AddShellysSteps, RepairsFlow):
         entry = self.hass.config_entries.async_get_entry(self._entry_id)
         return entry.runtime_data if entry and entry.state is ConfigEntryState.LOADED else None
 
-    def done(self) -> FlowResult:
+    def done(self) -> RepairsFlowResult:
         return self.async_create_entry(data={})
 
-    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> RepairsFlowResult:
         return await self.async_step_add()
 
 

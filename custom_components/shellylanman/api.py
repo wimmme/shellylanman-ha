@@ -52,11 +52,13 @@ def request_failed(err: ShellyLanManError) -> HomeAssistantError:
 def _error_of(text: str) -> tuple[str | None, str]:
     """Code and message of an error answer: {"error": {"code", "message"}} (0.9.7), {"error": "…"} before."""
     try:
-        err = (json_loads(text) or {}).get("error")
-    except (ValueError, AttributeError):
+        data = json_loads(text)
+    except ValueError:
         return None, text[:200]
+    err = data.get("error") if isinstance(data, dict) else None
     if isinstance(err, dict):
-        return err.get("code"), str(err.get("message") or err.get("code") or text[:200])
+        code = str(err["code"]) if err.get("code") else None
+        return code, str(err.get("message") or code or text[:200])
     return None, str(err or text[:200])
 
 
@@ -93,10 +95,12 @@ class ShellyLanManClient:
             try:
                 async with self._session.get(f"{self.url}/api/v1/status", timeout=aiohttp.ClientTimeout(total=15)) as resp:
                     if resp.status == 200:
-                        url = (json_loads(await resp.text()) or {}).get("localUrl") or LOCAL_URL
+                        data = json_loads(await resp.text())
+                        if isinstance(data, dict) and data.get("localUrl"):
+                            url = str(data["localUrl"])
             except (aiohttp.ClientError, TimeoutError, ValueError):
                 pass
-            self._local_url = str(url).rstrip("/")
+            self._local_url = url.rstrip("/")
         return self._local_url
 
     async def _request_at(self, base: str, method: str, path: str, json: Any = None) -> Any:
@@ -121,7 +125,8 @@ class ShellyLanManClient:
 
     async def about(self) -> dict[str, Any]:
         """Version, instance id and more (GET /about)."""
-        return await self._request("GET", "/about")
+        about: dict[str, Any] = await self._request("GET", "/about") or {}
+        return about
 
     async def devices(self) -> list[dict[str, Any]]:
         """All devices ShellyLanMan knows, with their state."""

@@ -8,9 +8,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from homeassistant.config_entries import ConfigEntryState, OptionsFlow
+from homeassistant.config_entries import ConfigEntryState, ConfigFlowResult, OptionsFlow
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.data_entry_flow import FlowResult
+from homeassistant.data_entry_flow import FlowHandler, FlowResult
 from homeassistant.helpers import config_validation as cv, issue_registry as ir
 
 from .const import DOMAIN, vol
@@ -84,30 +84,33 @@ def update_issue(hass: HomeAssistant, entry_id: str, rt: RuntimeData) -> None:
         ir.async_delete_issue(hass, DOMAIN, issue_id(entry_id))
 
 
-class AddShellysSteps:
-    """Steps "add" and "result"; the flow provides runtime() and done()."""
+class AddShellysSteps[ResultT: FlowResult[Any, str]](FlowHandler[Any, ResultT, str]):
+    """Steps "add" and "result"; the flow provides runtime() and done().
 
-    hass: HomeAssistant
+    Generic in the flow's result: an options flow's (Configure) or a repair flow's.
+    The context is Any: a repair flow's context type changed in Home Assistant 2026.10.
+    """
+
     _results: list[Result]
 
     def runtime(self) -> RuntimeData | None:  # pragma: no cover - provided by the flow
         raise NotImplementedError
 
-    def done(self) -> FlowResult:  # pragma: no cover - provided by the flow
+    def done(self) -> ResultT:  # pragma: no cover - provided by the flow
         raise NotImplementedError
 
-    async def async_step_add(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_add(self, user_input: dict[str, Any] | None = None) -> ResultT:
         """The Shellys ShellyLanMan knows and Home Assistant does not have; tick, then add."""
         rt = self.runtime()
         if rt is None:
-            return self.async_abort(reason="not_loaded")  # type: ignore[attr-defined]
+            return self.async_abort(reason="not_loaded")
         if user_input is None:
             # The list from ShellyLanMan as it is now, not the last 30-second poll.
             await rt.state.async_refresh()
         found = candidates(self.hass, rt.state.data.devices)
         addable = [c for c in found if c.state in ADDABLE]
         if not addable:
-            return self.async_abort(reason="nothing_to_add")  # type: ignore[attr-defined]
+            return self.async_abort(reason="nothing_to_add")
         if user_input is not None:
             chosen = [c for c in addable if c.id in set(user_input.get("devices") or [])]
             if chosen:
@@ -117,7 +120,7 @@ class AddShellysSteps:
         states = _texts(self.hass, _STATES)
         options = {c.id: f"{c.label} — {states[c.state]}" for c in addable}
         offline = [c for c in found if c.state == OFFLINE]
-        return self.async_show_form(  # type: ignore[attr-defined]
+        return self.async_show_form(
             step_id="add",
             data_schema=vol.Schema({vol.Required("devices", default=[c.id for c in addable]): cv.multi_select(options)}),
             description_placeholders={
@@ -128,7 +131,7 @@ class AddShellysSteps:
             },
         )
 
-    async def async_step_result(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_result(self, user_input: dict[str, Any] | None = None) -> ResultT:
         """What happened to each Shelly."""
         if user_input is not None:
             return self.done()
@@ -139,7 +142,7 @@ class AddShellysSteps:
             if r.detail:
                 line += f" ({r.detail})"
             lines.append(line)
-        return self.async_show_form(  # type: ignore[attr-defined]
+        return self.async_show_form(
             step_id="result",
             data_schema=vol.Schema({}),
             description_placeholders={
@@ -150,16 +153,16 @@ class AddShellysSteps:
         )
 
 
-class ShellyLanManOptionsFlow(AddShellysSteps, OptionsFlow):
+class ShellyLanManOptionsFlow(AddShellysSteps[ConfigFlowResult], OptionsFlow):
     """Configure → Add Shellys to Home Assistant."""
 
     def runtime(self) -> RuntimeData | None:
         entry = self.config_entry
         return entry.runtime_data if entry.state is ConfigEntryState.LOADED else None
 
-    def done(self) -> FlowResult:
+    def done(self) -> ConfigFlowResult:
         return self.async_create_entry(data=dict(self.config_entry.options))
 
-    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """The only option: add Shellys."""
         return await self.async_step_add()
