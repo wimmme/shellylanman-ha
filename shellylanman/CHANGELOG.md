@@ -1,9 +1,17 @@
 # Changelog
 
-## Unreleased
+## 1.1.0
 
-- The app's options are explained in all 9 languages of ShellyLanMan (German, French, Spanish, Italian, Czech,
-  Bulgarian and Chinese next to English and Dutch).
+Runs ShellyLanMan 1.1.0.
+
+- **Everything in the log**: every action (who asked: the sidebar, the integration, MCP, …) and what the devices
+  do (off line and back, restarts, new firmware offered); firmware updates followed to the end. Also kept on disk.
+- **Betas through ShellyLanMan** and a re-flash of the same version through the access-point wizard.
+- Devices, Checklist and Firmware as cards on a phone; on the desktop only the table scrolls, with Status and the
+  device's name first on all three.
+- Czech in ShellyLanMan, and the app's options explained in all 9 languages of ShellyLanMan.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
 
 ## 1.0.0
 
