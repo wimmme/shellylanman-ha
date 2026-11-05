@@ -1,14 +1,21 @@
 {
   "domain": "shellylanman",
   "name": "ShellyLanMan",
+  "categories": [
+    "computers_network.monitoring",
+    "plugs_switches"
+  ],
   "codeowners": [
     "@wimmme"
   ],
   "config_flow": true,
+  "connectivity": [
+    "network"
+  ],
   "documentation": "https://github.com/wimmme/shellylanman-ha",
   "integration_type": "hub",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/wimmme/shellylanman-ha/issues",
   "requirements": [],
-  "version": "0.9.12"
+  "version": "1.0.0"
 }

@@ -69,7 +69,12 @@ is in the HACS default list, so it is in Home Assistant's **Marketplace** too (H
 Assistant 2026.11 and newer, *Settings → Marketplace*, where HACS moved).
 
 1. Search for **ShellyLanMan** in the Marketplace (or in HACS before Home Assistant
-   2026.11), download it, then restart Home Assistant. With HACS this button opens it:
+   2026.11), download it, then restart Home Assistant. This button opens it in the
+   Marketplace:
+
+   [![Open the repository in the Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
+
+   and this one in HACS, before Home Assistant 2026.11:
 
    [![Open the repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
 2. With the app, Home Assistant offers **ShellyLanMan** under *Settings → Devices &
