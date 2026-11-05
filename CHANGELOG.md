@@ -10,7 +10,6 @@ Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyL
 The first stable integration: Home Assistant's quality scale Gold and Platinum (self-assessed, `QUALITY_SCALE.md`).
 
 - **Home Assistant 2026.11's Marketplace** lists it under *Computers & network → Monitoring* and *Plugs & switches*, reached over the network; the README's button opens it in the Marketplace.
-
 - **Diagnostics**: *Settings → Devices & services → ShellyLanMan → ⋮ → Download diagnostics* gives ShellyLanMan's version, the last poll, the devices and the checklist, without the MCP token.
 - **Error messages in your language**: a failed backup or rescan, an Assist tool that fails, ShellyLanMan not reachable or asking for its MCP token.
 - **Czech**: the integration now speaks ShellyLanMan's 9 languages, the *Add Shellys* dialog included; the app's options do too.
