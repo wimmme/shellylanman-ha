@@ -3,6 +3,13 @@
 The app has its own changelog in `shellylanman/CHANGELOG.md`. Up to 0.9.12 the app and the integration had the
 same version; since then the integration gets a new version only when it changes.
 
+## 1.1.0
+
+Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
+
+- The integration is now called **ShellyLanMan Integration** in the Marketplace, HACS and *Settings → Updates*, so it stands apart from the ShellyLanMan app. Nothing else changes: the entry, its devices and entities keep their names.
+- Version 1.1.0, the same as the app and ShellyLanMan at this release; from here on the integration's version still changes only when the integration does.
+
 ## 1.0.0
 
 Works with ShellyLanMan 0.5.0 or newer (0.7.0 for passwords, 0.9.0 for a ShellyLanMan with a UI password); Home Assistant 2026.9 or newer.
