@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0
+
+Runs ShellyLanMan 1.2.0.
+
+- Firmware updates keep going when Shelly's update server is slow or the Wi-Fi is weak: the update mark stays, an
+  update is followed as long as the device reports progress, and *Current FW* is no longer empty.
+- Links to Shelly's release notes on the Firmware page.
+- A right-click on Devices or Checklist acts on that one device only.
+- Devices: the spinner on archived devices while ShellyLanMan is still looking for them after a start.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 1.1.0
 
 Runs ShellyLanMan 1.1.0.
