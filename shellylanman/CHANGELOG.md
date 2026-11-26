@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.0
+
+Runs ShellyLanMan 1.3.0.
+
+- A Shelly with a wrong password is no longer kept locked: ShellyLanMan asks it less and less often, and the status
+  says whether the password was refused or none is set.
+- Settings → Firmware warns when the address for phones is not ShellyLanMan's own (for example Home Assistant's port
+  8123, where the wizard's QR code opened Home Assistant's start page).
+- New devices: Shelly i4 Gen4, LOQED Gateway and new BLU models.
+- A restore also sets Modbus as in the backup.
+
+All changes: [ShellyLanMan changelog](https://github.com/wimmme/shellylanman/blob/main/CHANGELOG.md).
+
 ## 1.2.0
 
 Runs ShellyLanMan 1.2.0.
