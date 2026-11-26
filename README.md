@@ -73,10 +73,6 @@ Assistant 2026.11 and newer, *Settings → Marketplace*, where HACS moved).
    Marketplace:
 
    [![Open the repository in the Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
-
-   and this one in HACS, before Home Assistant 2026.11:
-
-   [![Open the repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wimmme&repository=shellylanman-ha&category=integration)
 2. With the app, Home Assistant offers **ShellyLanMan** under *Settings → Devices &
    services → Discovered*: one click. Otherwise add it with ShellyLanMan's address
    (`http://<host>:3082`):
